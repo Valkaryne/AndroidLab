@@ -2,17 +2,17 @@ package com.epam.utils;
 
 import java.util.*;
 
-public class Way implements Comparable<Way> {
-    private List<Node> ways;
+public class Way<T extends Node> implements Comparable<Way> {
+    private List<T> ways;
     private int price;
 
-    public Way(Collection<Node> nodes) {
+    public Way(Collection<T> nodes) {
         ways = new ArrayList<>();
         ways.addAll(nodes);
         calculatePrice();
     }
 
-    public List<Node> getWays() {
+    public List<T> getWays() {
         return ways;
     }
 

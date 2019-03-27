@@ -1,5 +1,7 @@
 package com.epam.api;
 
+import com.epam.utils.Node;
+
 import java.util.List;
 
 public class Path {
@@ -9,20 +11,20 @@ public class Path {
     /**
      * All points of the path in the order we need to visit it.
      */
-    final List<String> path;
+    final List<Node> path;
 
     /**
      * Total cost of the path.
      */
     final int cost;
 
-    public Path(List<String> path, int cost) {
+    public Path(List<Node> path, int cost) {
         this.path = path;
         this.cost = cost;
     }
 
     @Override
     public String toString() {
-        return String.format(TO_STRING_PATTERN, String.join(" ", path), cost);
+        return String.format(TO_STRING_PATTERN, String.join(" ", path.toString()), cost);
     }
 }

@@ -4,13 +4,21 @@ import java.util.*;
 
 public class Node {
 
-    protected String name;
-    protected Set<Road> roads;
-    protected boolean start;
-    protected boolean end;
+    private String name;
+    private Set<Road> roads;
+    private boolean start;
+    private boolean end;
+
+    public Node() {
+        roads = new HashSet<>();
+    }
 
     public Node(String name) {
         roads = new HashSet<>();
+        this.name = name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 

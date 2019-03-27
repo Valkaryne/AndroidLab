@@ -1,5 +1,7 @@
 package com.epam.api;
 
+import com.epam.utils.Node;
+
 public interface GpsNavigator {
 
     /**

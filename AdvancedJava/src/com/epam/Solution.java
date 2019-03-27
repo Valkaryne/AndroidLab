@@ -1,16 +1,21 @@
 package com.epam;
 
 import com.epam.api.GpsNavigator;
+import com.epam.api.Path;
 import com.epam.impl.GenericNavigator;
+import com.epam.utils.Node;
+import com.epam.utils.Place;
 
 public class Solution {
 
     public static void main(String[] args) {
 
-        GpsNavigator navigator = new GenericNavigator();
+        GpsNavigator navigator = new GenericNavigator(Place.class);
         String roadMap = "D:\\Gps\\road_map.ext";
         navigator.readData(roadMap);
-        navigator.findPath("A", "C");
+        final Path path = navigator.findPath("A", "C");
+
+        System.out.println(path);
         /*final GpsNavigator navigator = new SimpleNavigator();
         String roadMap = "D:\\Gps\\road_map_.ext";
 

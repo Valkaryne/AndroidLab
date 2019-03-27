@@ -10,12 +10,17 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class GenericNavigator implements GpsNavigator {
+public class GenericNavigator<T extends Node> implements GpsNavigator {
 
     private final String ERROR_TAG = "ERROR: ";
+    private Class<T> tClass;
 
-    private final Map<String, Node> nodes = new HashMap<>();
+    private final Map<String, T> nodes = new HashMap<>();
     private final List<Way> possibleWays = new ArrayList<>();
+
+    public GenericNavigator(Class<T> tClass) {
+        this.tClass = tClass;
+    }
 
     @Override
     public void readData(String filePath) {
@@ -41,42 +46,52 @@ public class GenericNavigator implements GpsNavigator {
             ioe.getMessage();
         }
 
-        for (String pointName : startPoints) {
-            Node node;
-            if (nodes.containsKey(pointName)) {
-                node = nodes.get(pointName);
-                nodes.remove(pointName);
-            }
-            else
-                node = new Node(pointName);
+        try {
+            for (String pointName : startPoints) {
+                T node;
+                if (nodes.containsKey(pointName)) {
+                    node = nodes.get(pointName);
+                    nodes.remove(pointName);
+                }
+                else {
+                    node = genericFactoryMethod();
+                    node.setName(pointName);
+                }
 
-            node.setStart(true);
-            if (endPoints.contains(pointName))
+                node.setStart(true);
+                if (endPoints.contains(pointName))
+                    node.setEnd(true);
+
+                int[] indices = IntStream.range(0, startPoints.size())
+                        .filter(i -> pointName.equals(startPoints.get(i)))
+                        .toArray();
+                for (int index : indices) {
+                    Road road = new Road(pointName, endPoints.get(index), lengths.get(index), costs.get(index));
+                    node.addRoad(road);
+                }
+
+                nodes.put(pointName, node);
+            }
+
+            for (String pointName : endPoints) {
+                T node;
+                if (nodes.containsKey(pointName)) {
+                    continue;
+                } else {
+                    node = genericFactoryMethod();
+                    node.setName(pointName);
+                }
+
+
+                node.setStart(false);
                 node.setEnd(true);
 
-            int[] indices = IntStream.range(0, startPoints.size())
-                    .filter(i -> pointName.equals(startPoints.get(i)))
-                    .toArray();
-            for (int index : indices) {
-                Road road = new Road(pointName, endPoints.get(index), lengths.get(index), costs.get(index));
-                node.addRoad(road);
+                nodes.put(pointName, node);
             }
-
-            nodes.put(pointName, node);
+        } catch (ReflectiveOperationException roe) {
+            roe.getMessage();
         }
 
-        for (String pointName : endPoints) {
-            Node node;
-            if (nodes.containsKey(pointName)) {
-                continue;
-            } else
-                node = new Node(pointName);
-
-            node.setStart(false);
-            node.setEnd(true);
-
-            nodes.put(pointName, node);
-        }
     }
 
     @Override
@@ -91,7 +106,7 @@ public class GenericNavigator implements GpsNavigator {
         Way way = Collections.min(possibleWays);
         System.out.println(way + ", price: " + way.getPrice());
 
-        return null;
+        return new Path(way.getWays(), way.getPrice());
     }
 
     private void resolveWay(Stack<Node> way, final Node dst) {
@@ -123,4 +138,9 @@ public class GenericNavigator implements GpsNavigator {
             way.pop();
         }
     }
+
+    private T genericFactoryMethod() throws IllegalAccessException, InstantiationException {
+        return tClass.newInstance();
+    }
 }
+
