@@ -1,6 +1,7 @@
 package com.epam.impl;
 
 import com.epam.api.*;
+import com.epam.strategies.*;
 import com.epam.utils.*;
 
 import java.io.BufferedReader;
@@ -126,7 +127,7 @@ public class GenericNavigator<T extends Node> implements GpsNavigator {
                 // we add destination node to path, write it into array of possible ways
                 // and pop to review other options
                 way.push(nextNode);
-                possibleWays.add(new Way(way));
+                possibleWays.add(new Way(way, new CheapCalculationStrategy()));
                 way.pop();
                 continue;
             } else {

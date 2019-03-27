@@ -10,7 +10,7 @@ public class Solution {
 
     public static void main(String[] args) {
 
-        GpsNavigator navigator = new GenericNavigator(Place.class);
+        GpsNavigator navigator = new GenericNavigator(Node.class);
         String roadMap = "D:\\Gps\\road_map.ext";
         navigator.readData(roadMap);
         final Path path = navigator.findPath("A", "C");

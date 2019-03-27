@@ -1,14 +1,19 @@
 package com.epam.utils;
 
+import com.epam.strategies.CalculationStrategyInterface;
+
 import java.util.*;
 
 public class Way<T extends Node> implements Comparable<Way> {
     private List<T> ways;
     private int price;
 
-    public Way(Collection<T> nodes) {
+    private final CalculationStrategyInterface strategy;
+
+    public Way(Collection<T> nodes, CalculationStrategyInterface strategy) {
         ways = new ArrayList<>();
         ways.addAll(nodes);
+        this.strategy = strategy;
         calculatePrice();
     }
 
@@ -31,7 +36,7 @@ public class Way<T extends Node> implements Comparable<Way> {
             for (Road r : roadSet) {
                 if (r.getStart().equals(current.getName()) && r.getEnd().equals(next.getName())) {
                     road = r;
-                    price += road.getCost() * road.getLength();
+                    price += strategy.calculate(road.getLength(), road.getCost());
                     break;
                 }
             }
