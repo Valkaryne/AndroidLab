@@ -17,7 +17,7 @@ public class GenericNavigator {
 
     private List<Node> startPoints;
     private List<Node> endPoints;
-    private List<Road> roads;
+    private Map<String, Road> roads;
 
     private List<Way> possibleWays;
     private Node destination;
@@ -27,7 +27,7 @@ public class GenericNavigator {
 
         startPoints = new ArrayList<>();
         endPoints = new ArrayList<>();
-        roads = new ArrayList<>();
+        roads = new HashMap<>();
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(roadMap));
@@ -38,7 +38,8 @@ public class GenericNavigator {
                 Node endPoint = new Point(values[1]);
                 startPoints.add(startPoint);
                 endPoints.add(endPoint);
-                roads.add(new Road(startPoint, endPoint, Integer.parseInt(values[2]), Integer.parseInt(values[3])));
+                roads.put(startPoint.getName().concat(endPoint.getName()),
+                        new Road(startPoint, endPoint, Integer.parseInt(values[2]), Integer.parseInt(values[3])));
             }
             reader.close();
         } catch (IOException ioe) {
@@ -117,12 +118,8 @@ public class GenericNavigator {
     private int calculateDistance(List<Point> points) {
         int distance = 0;
         for (int i = 0; i < points.size() - 1; i++) {
-            Road road = new Road(points.get(i), points.get(i+1));
-            for (Road r : roads) {
-                if (r.equals(road)) {
-                    distance += r.getLength();
-                }
-            }
+            Road road = roads.get(points.get(i).getName().concat(points.get(i+1).getName()));
+            distance += road.getLength();
         }
         return distance;
     }
@@ -130,24 +127,9 @@ public class GenericNavigator {
     private int calculateCost(List<Point> route) {
         int cost = 0;
         for (int i = 0; i < route.size() - 1; i++) {
-            Road road = new Road(route.get(i), route.get(i+1));
-            for (Road r : roads) {
-                if (r.equals(road)) {
-                    cost += r.getLength() * r.getCost();
-                }
-            }
+            Road road = roads.get(route.get(i).getName().concat(route.get(i+1).getName()));
+            cost += road.getLength() * road.getCost();
         }
         return cost;
     }
-
-    /*
-    Road road = new Road(new Point("A"), new Point("B"), 1, 1);
-
-        for (Road r : roads) {
-            if (r.equals(road)) {
-                System.out.println(r.getName() + ", cost: " + r.getCost() + ", len: " + r.getLength());
-                break;
-            }
-        }
-     */
 }
