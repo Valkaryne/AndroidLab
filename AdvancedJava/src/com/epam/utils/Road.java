@@ -5,39 +5,42 @@ public class Road {
     private String name;
     private int length;
     private int cost;
-    private Node start;
-    private Node end;
+    private String start;
+    private String end;
 
-    public Road(Node start, Node end, int length, int cost) {
-        this.name = start.getName().concat(end.getName());
+    public Road(String start, String end, int length, int cost) {
+        this.name = start.concat(end);
         this.start = start;
         this.end = end;
         this.length = length;
         this.cost = cost;
     }
 
-    public Road(Node start, Node end) {
-        this.name = start.getName().concat(end.getName());
-        this.start = start;
-        this.end = end;
+    public String getStart() {
+        return start;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getCost() {
-        return cost;
+    public String getEnd() {
+        return end;
     }
 
     public int getLength() {
         return length;
     }
 
+    public int getCost() {
+        return cost;
+    }
+
+    @Override
+    public String toString() {
+        return "Road: " + name + ", length: " + length + ", cost: " + cost;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Road road = (Road) obj;
-        return name.equals(road.name);
+        return start.equals(road.start) && end.equals(road.end);
     }
 
     @Override

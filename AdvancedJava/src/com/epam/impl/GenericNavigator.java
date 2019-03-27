@@ -1,6 +1,6 @@
 package com.epam.impl;
 
-import com.epam.api.Path;
+import com.epam.api.*;
 import com.epam.utils.*;
 
 import java.io.BufferedReader;
@@ -8,128 +8,119 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class GenericNavigator {
+public class GenericNavigator implements GpsNavigator {
 
     private final String ERROR_TAG = "ERROR: ";
 
-    private List<Node> startPoints;
-    private List<Node> endPoints;
-    private Map<String, Road> roads;
+    private final Map<String, Node> nodes = new HashMap<>();
+    private final List<Way> possibleWays = new ArrayList<>();
 
-    private List<Way> possibleWays;
-    private Node destination;
-
+    @Override
     public void readData(String filePath) {
         File roadMap = new File(filePath);
 
-        startPoints = new ArrayList<>();
-        endPoints = new ArrayList<>();
-        roads = new HashMap<>();
+        List<String> startPoints = new ArrayList<>();
+        List<String> endPoints = new ArrayList<>();
+        List<Integer> lengths = new ArrayList<>();
+        List<Integer> costs = new ArrayList<>();
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(roadMap));
             String line = null;
             while ((line = reader.readLine()) != null) {
                 String[] values = line.split(" ");
-                Node startPoint = new Point(values[0]);
-                Node endPoint = new Point(values[1]);
-                startPoints.add(startPoint);
-                endPoints.add(endPoint);
-                roads.put(startPoint.getName().concat(endPoint.getName()),
-                        new Road(startPoint, endPoint, Integer.parseInt(values[2]), Integer.parseInt(values[3])));
+                startPoints.add(values[0]);
+                endPoints.add(values[1]);
+                lengths.add(Integer.parseInt(values[2]));
+                costs.add(Integer.parseInt(values[3]));
             }
             reader.close();
         } catch (IOException ioe) {
             ioe.getMessage();
         }
-    }
 
-    public Path findPath(Point pointA, Point pointB) {
-        this.destination = pointB;
-        possibleWays = new ArrayList<>();
-
-        Stack<Point> initWay = new Stack<>();
-        initWay.push(pointA);
-        resolveWay(initWay);
-
-        if (possibleWays.isEmpty()) {
-            System.out.println("No ways!");
-            return null;
-        }
-
-        return choosePath();
-    }
-
-    private void resolveWay(Stack<Point> way) {
-        Point currentPoint = way.peek();
-
-        int[] indices = IntStream.range(0, startPoints.size())
-                .filter(i -> currentPoint.equals(startPoints.get(i)))
-                .toArray();
-
-        for (int index : indices) {
-            Point nextPoint = (Point)endPoints.get(index);
-            if (way.contains(nextPoint)) {
-                continue;
-            } else if (nextPoint.equals(destination)) {
-                way.push(nextPoint);
-                appendPossibleWay(way);
-                way.pop();
-                continue;
-            } else {
-                way.push(nextPoint);
-                resolveWay(way);
+        for (String pointName : startPoints) {
+            Node node;
+            if (nodes.containsKey(pointName)) {
+                node = nodes.get(pointName);
+                nodes.remove(pointName);
             }
-            way.pop();
+            else
+                node = new Node(pointName);
+
+            node.setStart(true);
+            if (endPoints.contains(pointName))
+                node.setEnd(true);
+
+            int[] indices = IntStream.range(0, startPoints.size())
+                    .filter(i -> pointName.equals(startPoints.get(i)))
+                    .toArray();
+            for (int index : indices) {
+                Road road = new Road(pointName, endPoints.get(index), lengths.get(index), costs.get(index));
+                node.addRoad(road);
+            }
+
+            nodes.put(pointName, node);
+        }
+
+        for (String pointName : endPoints) {
+            Node node;
+            if (nodes.containsKey(pointName)) {
+                continue;
+            } else
+                node = new Node(pointName);
+
+            node.setStart(false);
+            node.setEnd(true);
+
+            nodes.put(pointName, node);
         }
     }
 
-    private void appendPossibleWay(Stack<Point> way) {
-        possibleWays.add(new Way(way));
-    }
+    @Override
+    public Path findPath(String pointA, String pointB) {
+        Node initial = nodes.get(pointA);
+        Node destination = nodes.get(pointB);
 
-    private Path choosePath() {
-        Map<Way, Integer> routes = new LinkedHashMap<>();
+        Stack<Node> initWay = new Stack<>();
+        initWay.push(initial);
+        resolveWay(initWay, destination);
 
-        for (Way way : possibleWays) {
-            List<Point> points = way.getWaySet();
-            int cost = calculateCost(points);
-            routes.put(way, cost);
-        }
+        Way way = Collections.min(possibleWays);
+        System.out.println(way + ", price: " + way.getPrice());
 
-        routes = routes
-                .entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue())
-                .collect(
-                        Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
-                                LinkedHashMap::new)
-                );
-
-        List<Point> route = routes.entrySet().iterator().next().getKey().getWaySet();
-        System.out.println(route + ", cost: " + calculateCost(route));
-        Path path = null;
         return null;
     }
 
-    private int calculateDistance(List<Point> points) {
-        int distance = 0;
-        for (int i = 0; i < points.size() - 1; i++) {
-            Road road = roads.get(points.get(i).getName().concat(points.get(i+1).getName()));
-            distance += road.getLength();
-        }
-        return distance;
-    }
+    private void resolveWay(Stack<Node> way, final Node dst) {
+        //We make ways from the last point. Initially it is the first point
+        Node currentNode = way.peek();
 
-    private int calculateCost(List<Point> route) {
-        int cost = 0;
-        for (int i = 0; i < route.size() - 1; i++) {
-            Road road = roads.get(route.get(i).getName().concat(route.get(i+1).getName()));
-            cost += road.getLength() * road.getCost();
+        //Find roads where we can go to from the current node
+        Set<Road> roads = currentNode.getRoads();
+
+        for (Road road : roads) {
+            Node nextNode = nodes.get(road.getEnd());
+
+            if (way.contains(nextNode)) {
+                // we don't want to move in circles so repeated point should not be added to path
+                continue;
+            } else if (nextNode.equals(dst)) {
+                // we add destination node to path, write it into array of possible ways
+                // and pop to review other options
+                way.push(nextNode);
+                possibleWays.add(new Way(way));
+                way.pop();
+                continue;
+            } else {
+                // we add new node to path and start to make ways from it
+                way.push(nextNode);
+                resolveWay(way, dst);
+            }
+            // all options for this chain were reviewed so we pop odd nodes
+            way.pop();
         }
-        return cost;
     }
 }
