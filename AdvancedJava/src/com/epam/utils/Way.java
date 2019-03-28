@@ -1,52 +1,48 @@
 package com.epam.utils;
 
-import com.epam.strategies.CalculationStrategyInterface;
+import com.epam.calculations.Calculator;
 
 import java.util.*;
 
 public class Way<T extends Node> implements Comparable<Way> {
-    private List<T> ways;
+    private List<T> routes;
     private int price;
 
-    private final CalculationStrategyInterface strategy;
-
-    public Way(Collection<T> nodes, CalculationStrategyInterface strategy) {
-        ways = new ArrayList<>();
-        ways.addAll(nodes);
-        this.strategy = strategy;
-        calculatePrice();
+    public Way(Collection<T> nodes) {
+        routes = new ArrayList<>();
+        routes.addAll(nodes);
+        //calculatePrice();
     }
 
-    public List<T> getWays() {
-        return ways;
+    public List<T> getRoutes() {
+        return routes;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public int getPrice() {
         return price;
     }
 
-    private void calculatePrice() {
+    public static <T extends Node> void calculatePrice(Way<T> way, Calculator<T> c) {
         int price = 0;
 
-        for (int i = 0; i < ways.size() - 1; i++) {
-            Node current = ways.get(i);
-            Node next = ways.get(i + 1);
-            Set<Road> roadSet = current.getRoads();
-            Road road;
-            for (Road r : roadSet) {
-                if (r.getStart().equals(current.getName()) && r.getEnd().equals(next.getName())) {
-                    road = r;
-                    price += strategy.calculate(road.getLength(), road.getCost());
-                    break;
-                }
-            }
+        List<T> routes = way.getRoutes();
+
+        for (int i = 0; i < routes.size() - 1; i++) {
+            T current = routes.get(i);
+            T next = routes.get(i + 1);
+            price += c.calculate(current, next);
         }
-        this.price = price;
+
+        way.setPrice(price);
     }
 
     @Override
     public String toString() {
-        return ways.toString();
+        return routes.toString();
     }
 
     @Override

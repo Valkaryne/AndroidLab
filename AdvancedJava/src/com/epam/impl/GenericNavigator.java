@@ -1,6 +1,7 @@
 package com.epam.impl;
 
 import com.epam.api.*;
+import com.epam.calculations.Calculator;
 import com.epam.strategies.*;
 import com.epam.utils.*;
 
@@ -14,13 +15,16 @@ import java.util.stream.IntStream;
 public class GenericNavigator<T extends Node> implements GpsNavigator {
 
     private final String ERROR_TAG = "ERROR: ";
+
     private Class<T> tClass;
+    private Calculator<T> calculator;
 
     private final Map<String, T> nodes = new HashMap<>();
     private final List<Way> possibleWays = new ArrayList<>();
 
-    public GenericNavigator(Class<T> tClass) {
+    public GenericNavigator(Class<T> tClass, Calculator<T> calculator) {
         this.tClass = tClass;
+        this.calculator = calculator;
     }
 
     @Override
@@ -97,28 +101,30 @@ public class GenericNavigator<T extends Node> implements GpsNavigator {
 
     @Override
     public Path findPath(String pointA, String pointB) {
-        Node initial = nodes.get(pointA);
-        Node destination = nodes.get(pointB);
+        T initial = nodes.get(pointA);
+        T destination = nodes.get(pointB);
 
-        Stack<Node> initWay = new Stack<>();
+        Stack<T> initWay = new Stack<>();
         initWay.push(initial);
         resolveWay(initWay, destination);
 
-        Way way = Collections.min(possibleWays);
-        System.out.println(way + ", price: " + way.getPrice());
+        for (Way way : possibleWays)
+            Way.calculatePrice(way, calculator);
 
-        return new Path(way.getWays(), way.getPrice());
+        Way way = Collections.min(possibleWays);
+
+        return new Path(way.getRoutes(), way.getPrice());
     }
 
-    private void resolveWay(Stack<Node> way, final Node dst) {
+    private void resolveWay(Stack<T> way, final T dst) {
         //We make ways from the last point. Initially it is the first point
-        Node currentNode = way.peek();
+        T currentNode = way.peek();
 
         //Find roads where we can go to from the current node
         Set<Road> roads = currentNode.getRoads();
 
         for (Road road : roads) {
-            Node nextNode = nodes.get(road.getEnd());
+            T nextNode = nodes.get(road.getEnd());
 
             if (way.contains(nextNode)) {
                 // we don't want to move in circles so repeated point should not be added to path
@@ -127,7 +133,7 @@ public class GenericNavigator<T extends Node> implements GpsNavigator {
                 // we add destination node to path, write it into array of possible ways
                 // and pop to review other options
                 way.push(nextNode);
-                possibleWays.add(new Way(way, new CheapCalculationStrategy()));
+                possibleWays.add(new Way(way));
                 way.pop();
                 continue;
             } else {

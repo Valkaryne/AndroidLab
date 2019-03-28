@@ -2,45 +2,38 @@ package com.epam;
 
 import com.epam.api.GpsNavigator;
 import com.epam.api.Path;
+import com.epam.calculations.Calculator;
+import com.epam.calculations.IncludedTaxCalculator;
 import com.epam.impl.GenericNavigator;
 import com.epam.utils.Node;
 import com.epam.utils.Place;
+import com.epam.utils.Road;
+
+import java.util.Set;
 
 public class Solution {
 
     public static void main(String[] args) {
 
-        GpsNavigator navigator = new GenericNavigator(Node.class);
+        GenericNavigator<Node> navigator = new GenericNavigator<Node>(Node.class, (n1, n2) -> {
+            Set<Road> roadSet = n1.getRoads();
+            for (Road r: roadSet) {
+                if (r.getStart().equals(n1.getName()) && r.getEnd().equals(n2.getName())) {
+                    return r.getLength() * r.getCost();
+                }
+            }
+            return 0;
+        });
         String roadMap = "D:\\Gps\\road_map.ext";
         navigator.readData(roadMap);
-        final Path path = navigator.findPath("A", "C");
+        final Path path = navigator.findPath("F", "B");
 
-        System.out.println(path);
-        /*final GpsNavigator navigator = new SimpleNavigator();
-        String roadMap = "D:\\Gps\\road_map_.ext";
+        System.out.println("Standard generic calculation: " + path);
 
-        try {
-            navigator.readData(roadMap);
-        } catch (RuntimeException rex) {
-            System.out.println(rex.getMessage());
-            return;
-        }
+        GenericNavigator<Place> navigator2 = new GenericNavigator<>(Place.class, new IncludedTaxCalculator());
+        navigator2.readData(roadMap);
+        final Path path2 = navigator2.findPath("A", "C");
 
-        Scanner scanner = new Scanner(System.in);
-
-        try {
-            System.out.print("Please, enter a start point: ");
-            String start = scanner.nextLine();
-
-            System.out.print("Please, enter an end point: ");
-            String end = scanner.nextLine();
-
-            final Path path = navigator.findPath(start, end);
-            System.out.println(path);
-        } catch (RuntimeException rex) {
-            System.out.println(rex.getMessage());
-        } finally {
-            scanner.close();
-        } */
+        System.out.println("Included tax calculation: " + path2);
     }
 }
