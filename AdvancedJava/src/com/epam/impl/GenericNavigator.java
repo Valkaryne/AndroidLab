@@ -2,13 +2,9 @@ package com.epam.impl;
 
 import com.epam.api.*;
 import com.epam.calculations.Calculator;
-import com.epam.strategies.*;
 import com.epam.utils.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.stream.IntStream;
 

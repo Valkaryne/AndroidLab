@@ -1,7 +1,6 @@
 package com.epam.calculations;
 
-import com.epam.utils.Place;
-import com.epam.utils.Road;
+import com.epam.utils.*;
 
 import java.util.Set;
 
