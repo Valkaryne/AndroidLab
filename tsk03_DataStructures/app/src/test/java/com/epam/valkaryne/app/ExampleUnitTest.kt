@@ -1,4 +1,4 @@
-package com.epam.valkaryne.datastructures
+package com.epam.valkaryne.app
 
 import org.junit.Test
 

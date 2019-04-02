@@ -2,7 +2,6 @@ package com.epam.valkaryne.app
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.epam.valkaryne.datastructures.R
 import com.epam.valkaryne.utils.CustomStack
 import kotlinx.android.synthetic.main.activity_main.*
 
