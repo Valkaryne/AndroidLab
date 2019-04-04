@@ -43,7 +43,8 @@ class CustomStack<E> {
      * @return the item argument.
      */
     fun push(item: E): E {
-        addItem(item)
+        checkCapacity(itemsCount + 1)
+        itemsData[itemsCount++] = item
 
         return item
     }
@@ -55,8 +56,7 @@ class CustomStack<E> {
      */
     fun pop(): E {
         val item = top()
-
-        removeItem(itemsCount - 1)
+        itemsData[itemsCount--] = null
 
         return item
     }
@@ -69,7 +69,7 @@ class CustomStack<E> {
     fun top(): E {
         if (isEmpty()) throw EmptyStackException()
 
-        return getItem(itemsCount - 1)
+        return itemsData[itemsCount - 1] as E
     }
 
     /**
@@ -77,45 +77,6 @@ class CustomStack<E> {
      * @return true if and only if the stack contains no items, false otherwise.
      */
     fun isEmpty() = itemsCount == 0
-
-    /**
-     * Adds the item to the end of the stack and increases its size by one.
-     * @param item the item to be added.
-     */
-    private fun addItem(item: E) {
-        checkCapacity(itemsCount + 1)
-        itemsData[itemsCount++] = item
-    }
-
-    /**
-     * Deletes the item at the specified index.
-     * @param index the index of the array to be removed
-     * @throws IndexOutOfBoundsException if the index is out of range.
-     */
-    private fun removeItem(index: Int) {
-        if (index >= itemsCount)
-            throw IndexOutOfBoundsException("$index >= $itemsCount")
-        else if (index < 0)
-            throw IndexOutOfBoundsException(index.toString())
-
-        val j = itemsCount - index - 1
-        if (j > 0) System.arraycopy(itemsData, index + 1, itemsData, index, j)
-        itemsCount--
-        itemsData[itemsCount] = null
-    }
-
-    /**
-     * Returns the item at the specified index.
-     * @param index an index in the array.
-     * @return the item at the specified index.
-     * @throws IndexOutOfBoundsException if the index is out of range.
-     */
-    fun getItem(index: Int): E {
-        if (index >= itemsCount)
-            throw IndexOutOfBoundsException("$index >= $itemsCount")
-
-        return itemsData[index] as E
-    }
 
     /**
      * Checks if we need to increase capacity of the stack.
