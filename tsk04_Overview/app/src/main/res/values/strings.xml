@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ImagePicker</string>
     <string name="gallery">Gallery</string>
+    <string name="image_desc">Fill this view with image from the gallery</string>
 </resources>
