@@ -9,11 +9,16 @@ import android.provider.MediaStore
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+/**
+ * The main activity of the application with simplified implementation.
+ * It handles the only onClickListener for the <code>btnGallery</code> button.
+ * The button performs opening of mobile gallery and suggests user to choose an image or a photo
+ * to put it on the main screen then.
+ *
+ * @author Valentine Litvin
+ */
 
-    companion object {
-        private const val IMAGE_PICKED_REQUEST = 1101
-    }
+class MainActivity : AppCompatActivity() {
 
     private var bitmap: Bitmap? = null
 
@@ -22,40 +27,51 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState != null) {
-            bitmap = savedInstanceState.getParcelable("image") as Bitmap
-            iv_image.setImageBitmap(bitmap)
+            bitmap = savedInstanceState.getParcelable(IMAGE_SAVED_KEY) as Bitmap
+            bitmap?.let { ivImage.setImageBitmap(it) }
         }
 
-        btn_gallery.setOnClickListener { navigateToGallery() }
+        btnGallery.setOnClickListener { navigateToGallery() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         when (requestCode) {
-            IMAGE_PICKED_REQUEST -> resolveImageData(resultCode, data)
+            IMAGE_PICKED_REQUEST -> {
+                if (resultCode == Activity.RESULT_OK)
+                    resolveImageData(data)
+                else
+                    Toast.makeText(applicationContext, getString(R.string.get_image_error), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        outState?.putParcelable("image", bitmap)
+        outState?.putParcelable(IMAGE_SAVED_KEY, bitmap)
     }
 
     private fun navigateToGallery() {
         val galleryIntent = Intent()
         galleryIntent.action = Intent.ACTION_PICK
-        galleryIntent.type = "image/*"
+        galleryIntent.type = IMAGE_INTENT_TYPE
         startActivityForResult(galleryIntent, IMAGE_PICKED_REQUEST)
     }
 
-    private fun resolveImageData(resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK && data != null) {
+    private fun resolveImageData(data: Intent?) {
+        if (data != null) {
             val pickedImage = data.data
             bitmap = MediaStore.Images.Media.getBitmap(contentResolver, pickedImage)
-            iv_image.setImageBitmap(bitmap)
+            ivImage.setImageBitmap(bitmap)
         } else {
-            Toast.makeText(applicationContext, "Error while opening image", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.get_image_error), Toast.LENGTH_SHORT).show()
         }
+    }
+
+    companion object {
+        private const val IMAGE_PICKED_REQUEST = 1101
+        private const val IMAGE_INTENT_TYPE = "image/*"
+        private const val IMAGE_SAVED_KEY = "image"
     }
 }
