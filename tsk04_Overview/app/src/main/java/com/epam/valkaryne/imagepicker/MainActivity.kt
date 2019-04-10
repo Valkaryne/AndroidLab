@@ -2,7 +2,7 @@ package com.epam.valkaryne.imagepicker
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -20,15 +20,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var bitmap: Bitmap? = null
+    private var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState != null) {
-            bitmap = savedInstanceState.getParcelable(IMAGE_SAVED_KEY) as Bitmap
-            bitmap?.let { ivImage.setImageBitmap(it) }
+            imageUri = savedInstanceState.getParcelable(IMAGE_SAVED_KEY) as Uri
+            imageUri?.let { updateImage(it) }
         }
 
         btnGallery.setOnClickListener { navigateToGallery() }
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        outState?.putParcelable(IMAGE_SAVED_KEY, bitmap)
+        outState?.putParcelable(IMAGE_SAVED_KEY, imageUri)
     }
 
     private fun navigateToGallery() {
@@ -62,14 +62,18 @@ class MainActivity : AppCompatActivity() {
     private fun resolveImageData(data: Intent?) {
         if (data != null) {
             val pickedImage = data.data
-            bitmap = MediaStore.Images.Media.getBitmap(contentResolver, pickedImage)
-            ivImage.setImageBitmap(bitmap)
+            pickedImage?.let { updateImage(it) }
         } else {
             Toast.makeText(applicationContext, getString(R.string.get_image_error), Toast.LENGTH_SHORT).show()
         }
     }
 
-    companion object {
+    private fun updateImage(uri: Uri) {
+        val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+        ivImage.setImageBitmap(bitmap)
+    }
+
+    private companion object {
         private const val IMAGE_PICKED_REQUEST = 1101
         private const val IMAGE_INTENT_TYPE = "image/*"
         private const val IMAGE_SAVED_KEY = "image"
