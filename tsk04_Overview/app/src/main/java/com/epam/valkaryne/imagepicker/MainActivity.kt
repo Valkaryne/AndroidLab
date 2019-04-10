@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState != null) {
-            imageUri = savedInstanceState.getParcelable(IMAGE_SAVED_KEY) as Uri
+            imageUri = savedInstanceState.getParcelable(IMAGE_SAVED_KEY) as Uri?
             imageUri?.let { updateImage(it) }
         }
 
@@ -61,8 +61,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun resolveImageData(data: Intent?) {
         if (data != null) {
-            val pickedImage = data.data
-            pickedImage?.let { updateImage(it) }
+            imageUri = data.data
+            imageUri?.let { updateImage(it) }
         } else {
             Toast.makeText(applicationContext, getString(R.string.get_image_error), Toast.LENGTH_SHORT).show()
         }
