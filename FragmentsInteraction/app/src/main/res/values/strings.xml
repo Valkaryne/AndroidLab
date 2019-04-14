@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Fragments Interaction</string>
+
+    <string name="increase_counter">Increase Counter</string>
+    <string name="counter_text">Current counter value: %1$s</string>
+
+    <string name="selected_configuration">standard</string>
 </resources>
