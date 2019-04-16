@@ -3,6 +3,7 @@ package com.epam.valkaryne.fragmentsinteraction
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_a.*
  */
 class AFragment : Fragment() {
 
-    lateinit var listener: CountListener
+    private var listener: CountListener? = null
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -31,7 +32,7 @@ class AFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        button.setOnClickListener { listener.incrementCounter() }
+        button.setOnClickListener { listener?.incrementCounter() }
     }
 
     companion object {

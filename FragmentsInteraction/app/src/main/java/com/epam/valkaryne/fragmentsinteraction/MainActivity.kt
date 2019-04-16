@@ -1,8 +1,10 @@
 package com.epam.valkaryne.fragmentsinteraction
 
+import android.content.res.Configuration
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 
 /**
@@ -17,6 +19,7 @@ import android.support.v4.app.FragmentTransaction
 class MainActivity : AppCompatActivity(), CountListener {
 
     private var count = 0
+    private var orientation = Configuration.ORIENTATION_PORTRAIT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +29,10 @@ class MainActivity : AppCompatActivity(), CountListener {
             count = savedInstanceState.getInt(KEY_COUNT)
         }
 
-        when (getString(R.string.selected_configuration)) {
-            CONFIG_STANDARD -> initFragmentsStandard()
+        orientation = resources.configuration.orientation
+
+        when (orientation) {
+            CONFIG_PORTRAIT -> initFragmentsStandard()
             CONFIG_LANDSCAPE -> initFragmentsLandscape()
         }
     }
@@ -37,37 +42,64 @@ class MainActivity : AppCompatActivity(), CountListener {
         outState?.putInt(KEY_COUNT, count)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (orientation == CONFIG_LANDSCAPE)
+            finish()
+    }
+
     override fun incrementCounter() {
-        when (getString(R.string.selected_configuration)) {
-            CONFIG_STANDARD -> incrementCounterStandard()
+        when (orientation) {
+            CONFIG_PORTRAIT -> incrementCounterStandard()
             CONFIG_LANDSCAPE -> incrementCounterLandscape()
         }
     }
 
     private fun initFragmentsStandard() {
         val mainFragment = AFragment.newInstance()
-        replaceFragment(mainFragment, R.id.fragmentContainer)
+        replaceFragment(mainFragment, R.id.fragmentContainer, FRAGMENT_A)
+
+        val index = supportFragmentManager.backStackEntryCount - 1
+        if (index > -1) {
+            checkLoadFragmentB(index)
+        }
+    }
+
+    private fun checkLoadFragmentB(index: Int) {
+        val backStack = supportFragmentManager.getBackStackEntryAt(index)
+        val tag = backStack.name
+        if (tag == FRAGMENT_B) {
+            val infoFragment = BFragment.newInstance(count)
+            replaceFragment(infoFragment, R.id.fragmentContainer, FRAGMENT_B)
+        }
     }
 
     private fun initFragmentsLandscape() {
         val firstFragment = AFragment.newInstance()
-        replaceFragment(firstFragment, R.id.firstFragmentContainer)
+        replaceFragment(firstFragment, R.id.firstFragmentContainer, FRAGMENT_A)
 
         val secondFragment = BFragment.newInstance(count)
-        replaceFragment(secondFragment, R.id.secondFragmentContainer)
+        replaceFragment(secondFragment, R.id.secondFragmentContainer, FRAGMENT_B)
     }
 
-    private fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
+    private fun replaceFragment(fragment: Fragment, frameId: Int, tag: String? = null) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(frameId, fragment)
-        transaction.addToBackStack(null)
+        checkAddToBackStack(fragment, tag, transaction)
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         transaction.commit()
     }
 
+    private fun checkAddToBackStack(fragment: Fragment, tag: String?, transaction: FragmentTransaction) {
+        if (fragment !is AFragment && orientation == CONFIG_PORTRAIT) {
+            supportFragmentManager.popBackStack(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            transaction.addToBackStack(tag)
+        }
+    }
+
     private fun incrementCounterStandard() {
         val infoFragment = BFragment.newInstance(++count)
-        replaceFragment(infoFragment, R.id.fragmentContainer)
+        replaceFragment(infoFragment, R.id.fragmentContainer, FRAGMENT_B)
     }
 
     private fun incrementCounterLandscape() {
@@ -77,8 +109,10 @@ class MainActivity : AppCompatActivity(), CountListener {
     }
 
     private companion object {
-        const val CONFIG_STANDARD = "standard"
-        const val CONFIG_LANDSCAPE = "landscape"
+        const val CONFIG_PORTRAIT = Configuration.ORIENTATION_PORTRAIT
+        const val CONFIG_LANDSCAPE = Configuration.ORIENTATION_LANDSCAPE
+        const val FRAGMENT_A = "AFragment"
+        const val FRAGMENT_B = "BFragment"
         const val KEY_COUNT = "count"
     }
 }
