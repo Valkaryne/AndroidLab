@@ -22,8 +22,8 @@ class BFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_b, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val count = arguments?.getInt(KEY_COUNT)
         count?.let { updateTextView(it) }
     }

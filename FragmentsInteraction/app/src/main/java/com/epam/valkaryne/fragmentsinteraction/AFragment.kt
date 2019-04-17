@@ -30,8 +30,8 @@ class AFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_a, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         button.setOnClickListener { listener?.incrementCounter() }
     }
 
