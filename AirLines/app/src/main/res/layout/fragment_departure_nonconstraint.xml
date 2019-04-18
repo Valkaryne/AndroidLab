@@ -9,18 +9,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBackground"
-        android:padding="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="16dp"
         android:orientation="vertical"
         tools:context=".DepartureNonconstraintFragment">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="16dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:layout_gravity="center"
                 android:text="@string/depart_title"
                 android:textColor="@color/colorRed"
                 android:textSize="25sp"
@@ -30,8 +33,7 @@
                 android:id="@+id/tv_depart_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:textColor="@color/colorGrey"
                 android:textSize="20sp"
                 android:gravity="end"
@@ -41,6 +43,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="9.5dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:orientation="horizontal">
@@ -48,7 +51,7 @@
                 android:id="@+id/tv_depart_seats"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical"
                 android:text="@string/free_seats"
                 android:textSize="12sp"
                 android:textColor="@color/colorLightGrey"
@@ -57,17 +60,20 @@
                 android:id="@+id/tv_depart_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:textSize="22sp"
                 android:textColor="@color/colorDarkGrey"
                 android:textStyle="bold"
-                android:gravity="end"
+                android:gravity="end|top"
+                android:textAlignment="gravity"
+
                 tools:text="435 BYN"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
+            android:paddingTop="5dp"
             android:paddingStart="44dp"
             android:paddingEnd="44dp"
             android:orientation="horizontal">
@@ -76,15 +82,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical"
                 android:textSize="38sp"
                 android:textColor="@color/colorLime"
                 tools:text="MSQ"/>
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:layout_gravity="center"
                 android:src="@drawable/ic_flight"
                 android:tint="@color/colorIndigo" />
             <TextView
@@ -92,9 +98,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="center_vertical"
                 android:textSize="38sp"
                 android:textColor="@color/colorLime"
-                android:textAlignment="textEnd"
+                android:gravity="end"
                 tools:text="FLO" />
         </LinearLayout>
 
@@ -102,7 +109,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="11.5dp"
+            android:paddingBottom="16dp">
 
             <TextView
                 android:id="@+id/tv_depart_takeoff_time"
@@ -169,12 +179,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="15dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:layout_gravity="center"
                 android:text="@string/return_title"
                 android:textColor="@color/colorLightBlue"
                 android:textSize="25sp"
@@ -184,8 +195,7 @@
                 android:id="@+id/tv_return_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:textColor="@color/colorGrey"
                 android:textSize="20sp"
                 android:gravity="end"
@@ -195,6 +205,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="9.5dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:orientation="horizontal">
@@ -202,7 +213,7 @@
                 android:id="@+id/tv_return_seats"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical"
                 android:text="@string/free_seats"
                 android:textSize="12sp"
                 android:textColor="@color/colorLightGrey"
@@ -211,17 +222,20 @@
                 android:id="@+id/tv_return_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:textSize="22sp"
                 android:textColor="@color/colorDarkGrey"
                 android:textStyle="bold"
-                android:gravity="end"
+                android:gravity="end|top"
+                android:textAlignment="gravity"
+
                 tools:text="488 BYN"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
+            android:paddingTop="5dp"
             android:paddingStart="44dp"
             android:paddingEnd="44dp"
             android:orientation="horizontal">
@@ -230,15 +244,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical"
                 android:textSize="38sp"
                 android:textColor="@color/colorLime"
                 tools:text="FLO"/>
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:layout_gravity="center"
                 android:src="@drawable/ic_flight"
                 android:tint="@color/colorIndigo" />
             <TextView
@@ -246,9 +260,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="center_vertical"
                 android:textSize="38sp"
                 android:textColor="@color/colorLime"
-                android:textAlignment="textEnd"
+                android:gravity="end"
                 tools:text="MSQ" />
         </LinearLayout>
 
@@ -256,7 +271,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="11.5dp"
+            android:paddingBottom="16dp">
 
             <TextView
                 android:id="@+id/tv_return_takeoff_time"
@@ -295,7 +313,6 @@
                 android:layout_marginStart="10dp"
                 android:src="@drawable/ic_airplane_landing"
                 android:tint="@color/colorIndigo" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -314,6 +331,7 @@
                     android:drawablePadding="8dp"
                     tools:text="4:10" />
             </LinearLayout>
+
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -332,6 +350,7 @@
                 <android.support.design.widget.FloatingActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_check"
                     android:tint="@android:color/white" />
