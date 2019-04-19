@@ -1,13 +1,9 @@
 <resources>
     <string name="app_name">AirLines</string>
-    <string name="depart_title">DEPART</string>
 
-    <string name="free_seats">Free seats: %1$s</string>
-    <string name="date">%1$s %2$s %3$s</string>
-    <string name="time">%1$s:%2$s</string>
-    <string name="price">%1$s %2$s</string>
+    <string name="depart_title">DEPART</string>
     <string name="return_title">RETURN</string>
+    <string name="free_seats">Free seats: %1$s</string>
     <string name="fragment_1">Fragment 1</string>
     <string name="fragment_2">Fragment 2</string>
-
 </resources>

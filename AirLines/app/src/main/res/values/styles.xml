@@ -8,4 +8,62 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AirlinesTextStyle" parent="@style/TextAppearance.AppCompat">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/standard</item>
+    </style>
+    
+    <style name="AirlinesTextStyle.Depart">
+        <item name="android:textColor">@color/colorRed</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AirlinesTextStyle.Return">
+        <item name="android:textColor">@color/colorLightBlue</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AirlinesTextStyle.Date">
+        <item name="android:textColor">@color/colorGrey</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="AirlinesTextStyle.Free">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/colorLightGrey</item>
+    </style>
+
+    <style name="AirlinesTextStyle.Price">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/colorDarkGrey</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="AirlinesTextStyle.Airport" parent="@style/TextAppearance.AppCompat">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginHorizontal">44dp</item>
+        <item name="android:textSize">38sp</item>
+        <item name="android:textColor">@color/colorLime</item>
+    </style>
+
+    <style name="AirlinesTextStyle.Time">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/colorGrey</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:drawableTint">@color/colorIndigo</item>
+    </style>
+
+    <style name="AirlinesTextStyle.Duration">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorLightGrey</item>
+        <item name="android:drawableStart">@drawable/ic_clock</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:drawableTint">@color/colorLightGrey</item>
+    </style>
+
 </resources>

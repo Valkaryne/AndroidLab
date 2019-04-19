@@ -10,63 +10,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBackground"
-        android:padding="16dp"
+        android:padding="@dimen/standard"
         tools:context=".DepartureConstraintFragment">
         <TextView
             android:id="@+id/tv_depart_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            style="@style/AirlinesTextStyle.Depart"
             android:text="@string/depart_title"
-            android:textColor="@color/colorRed"
-            android:textSize="25sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_depart_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textColor="@color/colorGrey"
-            android:textSize="20sp"
+            style="@style/AirlinesTextStyle.Date"
             tools:text="16 SEP 2019"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/tv_depart_seats"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            style="@style/AirlinesTextStyle.Free"
             android:text="@string/free_seats"
-            android:textSize="12sp"
-            android:textColor="@color/colorLightGrey"
             tools:text="Free seats: 3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_depart_title"/>
 
         <TextView
             android:id="@+id/tv_depart_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textSize="22sp"
-            android:textColor="@color/colorDarkGrey"
-            android:textStyle="bold"
+            style="@style/AirlinesTextStyle.Price"
             tools:text="435 BYN"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_depart_date"/>
 
         <TextView
             android:id="@+id/tv_depart_deppoint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="16dp"
-            android:textSize="38sp"
-            android:textColor="@color/colorLime"
+            style="@style/AirlinesTextStyle.Airport"
             tools:text="MSQ"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_depart_seats"/>
@@ -84,25 +61,15 @@
 
         <TextView
             android:id="@+id/tv_depart_arrpoint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="44dp"
-            android:textSize="38sp"
-            android:textColor="@color/colorLime"
+            style="@style/AirlinesTextStyle.Airport"
             tools:text="FLO"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_depart_deppoint"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_depart_seats"/>
 
         <TextView
             android:id="@+id/tv_depart_takeoff_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textSize="18sp"
-            android:textColor="@color/colorGrey"
+            style="@style/AirlinesTextStyle.Time"
             android:drawableEnd="@drawable/ic_airplane_takeoff"
-            android:drawablePadding="10dp"
-            android:drawableTint="@color/colorIndigo"
             tools:text="00:20"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_depart_deppoint"/>
@@ -111,7 +78,7 @@
             android:id="@+id/iv_depart_until"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/standard"
             android:src="@drawable/ic_trending_flat"
             android:tint="@color/colorGrey"
             app:layout_constraintStart_toEndOf="@id/tv_depart_takeoff_time"
@@ -119,37 +86,24 @@
 
         <TextView
             android:id="@+id/tv_depart_landing_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:textSize="18sp"
-            android:textColor="@color/colorGrey"
+            style="@style/AirlinesTextStyle.Time"
             android:drawableEnd="@drawable/ic_airplane_landing"
-            android:drawablePadding="10dp"
-            android:drawableTint="@color/colorIndigo"
             tools:text="09:20"
             app:layout_constraintStart_toEndOf="@id/iv_depart_until"
-            app:layout_constraintTop_toTopOf="@id/iv_depart_until"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_depart_deppoint"/>
 
         <TextView
             android:id="@+id/tv_depart_duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:drawableStart="@drawable/ic_clock"
-            android:drawablePadding="8dp"
-            android:drawableTint="@color/colorLightGrey"
+            style="@style/AirlinesTextStyle.Duration"
             tools:text="9:00"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_depart_landing_time"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_depart_deppoint"/>
 
         <View
             android:id="@+id/separator_depart"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/standard"
             android:background="@color/colorLightGrey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -157,58 +111,35 @@
 
         <TextView
             android:id="@+id/tv_return_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/AirlinesTextStyle.Return"
             android:text="@string/return_title"
-            android:textColor="@color/colorLightBlue"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:layout_margin="16dp"
             app:layout_constraintStart_toStartOf="@id/separator_depart"
             app:layout_constraintTop_toTopOf="@id/separator_depart" />
 
         <TextView
             android:id="@+id/tv_return_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorGrey"
-            android:textSize="20sp"
-            android:layout_margin="16dp"
+            style="@style/AirlinesTextStyle.Date"
             tools:text="17 SEP 2019"
             app:layout_constraintEnd_toEndOf="@id/separator_depart"
             app:layout_constraintTop_toTopOf="@id/separator_depart"/>
 
         <TextView
             android:id="@+id/tv_return_seats"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textSize="12sp"
-            android:textColor="@color/colorLightGrey"
+            style="@style/AirlinesTextStyle.Free"
             tools:text="Free seats: 5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_return_title"/>
 
         <TextView
             android:id="@+id/tv_return_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textSize="22sp"
-            android:textColor="@color/colorDarkGrey"
-            android:textStyle="bold"
+            style="@style/AirlinesTextStyle.Price"
             tools:text="488 BYN"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_return_date"/>
 
         <TextView
             android:id="@+id/tv_return_deppoint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="16dp"
-            android:textSize="38sp"
-            android:textColor="@color/colorLime"
+            style="@style/AirlinesTextStyle.Airport"
             tools:text="FLO"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_return_seats"/>
@@ -226,25 +157,15 @@
 
         <TextView
             android:id="@+id/tv_return_arrpoint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="44dp"
-            android:textSize="38sp"
-            android:textColor="@color/colorLime"
+            style="@style/AirlinesTextStyle.Airport"
             tools:text="MSQ"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_return_deppoint"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_return_seats"/>
 
         <TextView
             android:id="@+id/tv_return_takeoff_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textSize="18sp"
-            android:textColor="@color/colorGrey"
+            style="@style/AirlinesTextStyle.Time"
             android:drawableEnd="@drawable/ic_airplane_takeoff"
-            android:drawablePadding="10dp"
-            android:drawableTint="@color/colorIndigo"
             tools:text="05:10"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_return_deppoint"/>
@@ -253,7 +174,7 @@
             android:id="@+id/iv_return_until"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/standard"
             android:src="@drawable/ic_trending_flat"
             android:tint="@color/colorGrey"
             app:layout_constraintStart_toEndOf="@id/tv_return_takeoff_time"
@@ -261,37 +182,24 @@
 
         <TextView
             android:id="@+id/tv_return_landing_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:textSize="18sp"
-            android:textColor="@color/colorGrey"
+            style="@style/AirlinesTextStyle.Time"
             android:drawableEnd="@drawable/ic_airplane_landing"
-            android:drawablePadding="10dp"
-            android:drawableTint="@color/colorIndigo"
             tools:text="09:20"
             app:layout_constraintStart_toEndOf="@id/iv_return_until"
-            app:layout_constraintTop_toTopOf="@id/iv_return_until"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_return_deppoint"/>
 
         <TextView
             android:id="@+id/tv_return_duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:drawableStart="@drawable/ic_clock"
-            android:drawablePadding="8dp"
-            android:drawableTint="@color/colorLightGrey"
+            style="@style/AirlinesTextStyle.Duration"
             tools:text="4:10"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_return_landing_time"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_return_deppoint"/>
 
         <View
             android:id="@+id/separator_return"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/standard"
             android:background="@color/colorLightGrey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -301,9 +209,11 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/standard"
             android:src="@drawable/ic_check"
+            android:backgroundTint="@color/colorLime"
             android:tint="@android:color/white"
+            app:backgroundTint="@color/colorLime"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

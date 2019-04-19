@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
-    //TODO: separate margins in layouts
     //TODO: delete redundant resources and get rid of synthetic
     //TODO: make documentation
     //TODO: prey
