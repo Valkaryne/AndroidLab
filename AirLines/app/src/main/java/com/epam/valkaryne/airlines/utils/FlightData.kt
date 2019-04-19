@@ -3,6 +3,12 @@ package com.epam.valkaryne.airlines.utils
 import java.time.LocalDate
 import java.util.*
 
+/**
+ * Data class for data will displayed on the screen.
+ *
+ * @author Valentine Litvin
+ */
+
 data class FlightData(val inDepart: String,
                       val inArrival: String,
                       val inDate: LocalDate,

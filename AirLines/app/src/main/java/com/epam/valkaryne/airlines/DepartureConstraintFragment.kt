@@ -1,16 +1,20 @@
 package com.epam.valkaryne.airlines
 
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.epam.valkaryne.airlines.utils.FlightData
 
 /**
- * A simple [Fragment] subclass.
+ * A simple [Fragment] subclass. Based on ConstraintLayout to display [FlightData] for airlines.
+ * Has one Floating Action Button displays Toast.
  *
+ * @author Valentine Litvin
  */
 class DepartureConstraintFragment : Fragment() {
 
@@ -21,7 +25,6 @@ class DepartureConstraintFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_departure_constraint, container, false)
     }
 
@@ -29,6 +32,11 @@ class DepartureConstraintFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         fillDepartData()
         fillReturnData()
+
+        val fab = view.findViewById<FloatingActionButton>(R.id.fab)
+        fab.setOnClickListener {
+            Toast.makeText(context, "[Constraint]: Flight Booked", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun fillDepartData() {

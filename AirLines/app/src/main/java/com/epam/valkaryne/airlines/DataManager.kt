@@ -4,6 +4,12 @@ import com.epam.valkaryne.airlines.utils.FlightData
 import com.epam.valkaryne.airlines.utils.FlightTime
 import java.time.LocalDate
 
+/**
+ * Simple class to return flight data with standard parameters.
+ *
+ * @author Valentine Litvin
+ */
+
 class DataManager {
     companion object {
         fun departFlightData() : FlightData {

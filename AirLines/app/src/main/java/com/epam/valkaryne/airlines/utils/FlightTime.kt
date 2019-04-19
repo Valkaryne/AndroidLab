@@ -1,5 +1,12 @@
 package com.epam.valkaryne.airlines.utils
 
+/**
+ * Data class for displayed time and duration.
+ * Narrow-specified because of being suitable only for one-day flights (could be improved in future)
+ *
+ * @author Valentine Litvin
+ */
+
 data class FlightTime(val inHours: Int, val inMinutes: Int) {
 
     var hours : Int = inHours
