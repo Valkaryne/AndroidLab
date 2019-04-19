@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity() {
         val btnShowConstraint = findViewById<Button>(R.id.btn_show_constraint)
         val btnShowNonconstraint = findViewById<Button>(R.id.btn_show_nonconstraint)
 
+        replaceFragment(DepartureConstraintFragment.newInstance(departData, returnData))
+
         btnShowConstraint.setOnClickListener {
             replaceFragment(DepartureConstraintFragment.newInstance(departData, returnData))
         }
