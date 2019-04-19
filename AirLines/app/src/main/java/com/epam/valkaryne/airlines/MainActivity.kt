@@ -3,6 +3,7 @@ package com.epam.valkaryne.airlines
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.widget.Button
 import com.epam.valkaryne.airlines.utils.FlightData
 import com.epam.valkaryne.airlines.utils.FlightTime
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,8 +18,16 @@ class MainActivity : AppCompatActivity() {
         val departData = DataManager.departFlightData()
         val returnData = DataManager.returnFlightData()
 
-        btn_show_constraint.setOnClickListener { replaceFragment(DepartureConstraintFragment.newInstance(departData, returnData)) }
-        btn_show_nonconstraint.setOnClickListener { replaceFragment(DepartureNonconstraintFragment.newInstance(departData, returnData)) }
+        val btnShowConstraint = findViewById<Button>(R.id.btn_show_constraint)
+        val btnShowNonconstraint = findViewById<Button>(R.id.btn_show_nonconstraint)
+
+        btnShowConstraint.setOnClickListener {
+            replaceFragment(DepartureConstraintFragment.newInstance(departData, returnData))
+        }
+
+        btnShowNonconstraint.setOnClickListener {
+            replaceFragment(DepartureNonconstraintFragment.newInstance(departData, returnData))
+        }
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -27,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
-    //TODO: delete redundant resources and get rid of synthetic
     //TODO: make documentation
     //TODO: prey
 }

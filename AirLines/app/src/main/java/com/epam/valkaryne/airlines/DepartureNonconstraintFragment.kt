@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.epam.valkaryne.airlines.utils.FlightData
-import kotlinx.android.synthetic.main.fragment_departure_nonconstraint.*
 
 /**
  * A simple [Fragment] subclass.
@@ -33,27 +33,43 @@ class DepartureNonconstraintFragment : Fragment() {
 
     private fun fillDepartData() {
         departData?.let {
-            tv_depart_deppoint.text = it.depart
-            tv_depart_arrpoint.text = it.arrival
-            tv_depart_date.text = it.date
-            tv_depart_price.text = "${it.price} ${it.currency}"
-            tv_depart_takeoff_time.text = it.takeoffTime
-            tv_depart_landing_time.text = it.landingTime
-            tv_depart_duration.text = it.duration
-            tv_depart_seats.text = "Free seats: ${it.freeSeats}"
+            val tvDepartDeppoint = view?.findViewById<TextView>(R.id.tv_depart_deppoint)
+            tvDepartDeppoint?.text = it.depart
+            val tvDepartArrpoint = view?.findViewById<TextView>(R.id.tv_depart_arrpoint)
+            tvDepartArrpoint?.text = it.arrival
+            val tvDepartDate = view?.findViewById<TextView>(R.id.tv_depart_date)
+            tvDepartDate?.text = it.date
+            val tvDepartPrice = view?.findViewById<TextView>(R.id.tv_depart_price)
+            tvDepartPrice?.text = "${it.price} ${it.currency}"
+            val tvDepartTakeoffTime = view?.findViewById<TextView>(R.id.tv_depart_takeoff_time)
+            tvDepartTakeoffTime?.text = it.takeoffTime
+            val tvDepartLandingTime = view?.findViewById<TextView>(R.id.tv_depart_landing_time)
+            tvDepartLandingTime?.text = it.landingTime
+            val tvDepartDuration = view?.findViewById<TextView>(R.id.tv_depart_duration)
+            tvDepartDuration?.text = it.duration
+            val tvDepartSeats = view?.findViewById<TextView>(R.id.tv_depart_seats)
+            tvDepartSeats?.text = String.format(getString(R.string.free_seats, it.freeSeats.toString()))
         }
     }
 
     private fun fillReturnData() {
         returnData?.let {
-            tv_return_deppoint.text = it.depart
-            tv_return_arrpoint.text = it.arrival
-            tv_return_date.text = it.date
-            tv_return_price.text = "${it.price} ${it.currency}"
-            tv_return_takeoff_time.text = it.takeoffTime
-            tv_return_landing_time.text = it.landingTime
-            tv_return_duration.text = it.duration
-            tv_return_seats.text = "Free seats: ${it.freeSeats}"
+            val tvReturnDeppoint = view?.findViewById<TextView>(R.id.tv_return_deppoint)
+            tvReturnDeppoint?.text = it.depart
+            val tvReturnArrpoint = view?.findViewById<TextView>(R.id.tv_return_arrpoint)
+            tvReturnArrpoint?.text = it.arrival
+            val tvReturnDate = view?.findViewById<TextView>(R.id.tv_return_date)
+            tvReturnDate?.text = it.date
+            val tvReturnPrice = view?.findViewById<TextView>(R.id.tv_return_price)
+            tvReturnPrice?.text = "${it.price} ${it.currency}"
+            val tvReturnTakeoffTime = view?.findViewById<TextView>(R.id.tv_return_takeoff_time)
+            tvReturnTakeoffTime?.text = it.takeoffTime
+            val tvReturnLandingTime = view?.findViewById<TextView>(R.id.tv_return_landing_time)
+            tvReturnLandingTime?.text = it.landingTime
+            val tvReturnDuration = view?.findViewById<TextView>(R.id.tv_return_duration)
+            tvReturnDuration?.text = it.duration
+            val tvReturnSeats = view?.findViewById<TextView>(R.id.tv_return_seats)
+            tvReturnSeats?.text = String.format(getString(R.string.free_seats, it.freeSeats.toString()))
         }
     }
 
