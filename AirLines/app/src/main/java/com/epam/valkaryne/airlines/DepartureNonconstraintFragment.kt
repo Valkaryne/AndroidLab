@@ -11,7 +11,7 @@ import android.widget.Toast
 import com.epam.valkaryne.airlines.utils.FlightData
 
 /**
- * A simple [Fragment] subclass. Based on LinearLayouts to display [FlightData] for airlines.
+ * A simple [Fragment] subclass. Based on Linear and Relative Layouts to display [FlightData] for airlines.
  * Has one Floating Action Button displays Toast.
  *
  * @author Valentine Litvin
@@ -48,7 +48,7 @@ class DepartureNonconstraintFragment : Fragment() {
             val tvDepartDate = view?.findViewById<TextView>(R.id.tv_depart_date)
             tvDepartDate?.text = it.date
             val tvDepartPrice = view?.findViewById<TextView>(R.id.tv_depart_price)
-            tvDepartPrice?.text = "${it.price} ${it.currency}"
+            tvDepartPrice?.text = String.format(getString(R.string.price, it.price.toString(), it.currency))
             val tvDepartTakeoffTime = view?.findViewById<TextView>(R.id.tv_depart_takeoff_time)
             tvDepartTakeoffTime?.text = it.takeoffTime
             val tvDepartLandingTime = view?.findViewById<TextView>(R.id.tv_depart_landing_time)
@@ -69,7 +69,7 @@ class DepartureNonconstraintFragment : Fragment() {
             val tvReturnDate = view?.findViewById<TextView>(R.id.tv_return_date)
             tvReturnDate?.text = it.date
             val tvReturnPrice = view?.findViewById<TextView>(R.id.tv_return_price)
-            tvReturnPrice?.text = "${it.price} ${it.currency}"
+            tvReturnPrice?.text = String.format(getString(R.string.price, it.price.toString(), it.currency))
             val tvReturnTakeoffTime = view?.findViewById<TextView>(R.id.tv_return_takeoff_time)
             tvReturnTakeoffTime?.text = it.takeoffTime
             val tvReturnLandingTime = view?.findViewById<TextView>(R.id.tv_return_landing_time)

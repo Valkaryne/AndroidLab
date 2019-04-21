@@ -4,6 +4,8 @@
     <string name="depart_title">DEPART</string>
     <string name="return_title">RETURN</string>
     <string name="free_seats">Free seats: %1$s</string>
+    <string name="price">%1$s %2$s</string>
+    s
     <string name="fragment_1">Fragment 1</string>
     <string name="fragment_2">Fragment 2</string>
 </resources>
