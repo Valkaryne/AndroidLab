@@ -24,7 +24,8 @@
             style="@style/AirlinesTextStyle.Date"
             tools:text="16 SEP 2019"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_depart_title"/>
 
         <TextView
             android:id="@+id/tv_depart_seats"
@@ -32,7 +33,8 @@
             android:text="@string/free_seats"
             tools:text="Free seats: 3"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_depart_title"/>
+            app:layout_constraintTop_toTopOf="@id/tv_depart_price"
+            app:layout_constraintBottom_toBottomOf="@id/tv_depart_price"/>
 
         <TextView
             android:id="@+id/tv_depart_price"
@@ -52,9 +54,10 @@
             android:id="@+id/iv_depart_flight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_flight"
+            android:src="@drawable/ic_airplane"
             android:tint="@color/colorIndigo"
             android:layout_marginTop="6dp"
+            android:rotation="90"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_depart_deppoint"/>
@@ -113,22 +116,25 @@
             android:id="@+id/tv_return_title"
             style="@style/AirlinesTextStyle.Return"
             android:text="@string/return_title"
-            app:layout_constraintStart_toStartOf="@id/separator_depart"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/separator_depart" />
 
         <TextView
             android:id="@+id/tv_return_date"
             style="@style/AirlinesTextStyle.Date"
             tools:text="17 SEP 2019"
-            app:layout_constraintEnd_toEndOf="@id/separator_depart"
-            app:layout_constraintTop_toTopOf="@id/separator_depart"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_return_title"/>
 
         <TextView
             android:id="@+id/tv_return_seats"
             style="@style/AirlinesTextStyle.Free"
+            android:text="@string/free_seats"
             tools:text="Free seats: 5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_return_title"/>
+            app:layout_constraintTop_toTopOf="@id/tv_return_price"
+            app:layout_constraintBottom_toBottomOf="@id/tv_return_price"/>
 
         <TextView
             android:id="@+id/tv_return_price"
@@ -148,9 +154,10 @@
             android:id="@+id/iv_return_flight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_flight"
+            android:src="@drawable/ic_airplane"
             android:tint="@color/colorIndigo"
             android:layout_marginTop="6dp"
+            android:rotation="90"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_return_deppoint"/>
