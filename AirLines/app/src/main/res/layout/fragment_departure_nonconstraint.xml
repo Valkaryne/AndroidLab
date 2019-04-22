@@ -150,6 +150,7 @@
                 android:drawablePadding="8dp"
                 tools:text="9:00"/>
         </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -290,31 +291,25 @@
                 android:drawablePadding="8dp"
                 tools:text="4:10"/>
         </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorLightGrey"/>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <LinearLayout
+            android:layout_height="match_parent">
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_check"
-                    android:backgroundTint="@color/colorLime"
-                    android:tint="@android:color/white"
-                    app:backgroundTint="@color/colorLime"/>
-            </LinearLayout>
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_check"
+                android:backgroundTint="@color/colorLime"
+                android:tint="@android:color/white"
+                app:backgroundTint="@color/colorLime"/>
+        </FrameLayout>
     </LinearLayout>
 </ScrollView>
