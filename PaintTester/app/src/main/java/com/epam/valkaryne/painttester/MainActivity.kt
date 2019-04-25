@@ -7,6 +7,13 @@ import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.core.view.isVisible
 
+/**
+ * Simple Activity for testing the [PaintWidget]. It contains one [ToggleButton] which shows/hide
+ * our Custom View.
+ * There is one Listener declared in the code listens to color and width params are changed.
+ *
+ * @author Valentine Litvin
+ */
 class MainActivity : AppCompatActivity() {
 
     private var widget: PaintWidget? = null
