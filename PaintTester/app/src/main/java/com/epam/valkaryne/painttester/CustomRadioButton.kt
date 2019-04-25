@@ -5,12 +5,17 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.util.Log
 import androidx.appcompat.widget.AppCompatRadioButton
 
 class CustomRadioButton(context: Context?, attrs: AttributeSet?) :
     AppCompatRadioButton(context, attrs) {
 
     var color: Int? = null
+        set(value) {
+            field = value
+            calculateAlpha(value)
+        }
 
     private var alphaColor: Int? = null
     private var picker: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -20,10 +25,7 @@ class CustomRadioButton(context: Context?, attrs: AttributeSet?) :
         val a = context?.obtainStyledAttributes(attrs, R.styleable.CustomRadioButton)
         color = a?.getColor(R.styleable.CustomRadioButton_color, Color.BLACK)
 
-        color?.let {
-            val alpha: Int = Math.round(Color.alpha(it) * 0.5).toInt()
-            alphaColor = Color.argb(alpha, Color.red(it), Color.green(it), Color.blue(it))
-        }
+        calculateAlpha(color)
         a?.recycle()
         initPaint()
     }
@@ -39,6 +41,13 @@ class CustomRadioButton(context: Context?, attrs: AttributeSet?) :
         marker = Paint(Paint.ANTI_ALIAS_FLAG)
         marker.style = Paint.Style.STROKE
         marker.color = Color.argb(alpha, Color.red(standardColor), Color.green(standardColor), Color.blue(standardColor))
+    }
+
+    private fun calculateAlpha(color: Int?) {
+        color?.let {
+            val alpha: Int = Math.round(Color.alpha(it) * 0.5).toInt()
+            alphaColor = Color.argb(alpha, Color.red(it), Color.green(it), Color.blue(it))
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

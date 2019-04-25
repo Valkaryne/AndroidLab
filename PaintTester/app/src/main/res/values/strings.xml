@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PaintTester</string>
+    <string name="width_title">Width:</string>
+    <string name="colors_title">Colors:</string>
+    <string name="hide">HIDE</string>
+    <string name="show">SHOW</string>
 </resources>
