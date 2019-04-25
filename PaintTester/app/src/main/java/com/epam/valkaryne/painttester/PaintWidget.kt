@@ -12,6 +12,16 @@ import androidx.core.view.get
 
 import com.epam.valkaryne.painttester.utils.*
 
+/**
+ * Custom view. It has [SeekBar] with [TextView] indicator and colorpicker based on RadioGroup.
+ * Widget has three attributes:
+ *  @property pMaxWidth defines max value of the [SeekBar]
+ *  @property defaultColorPosition chooses checked color initially
+ *  @property firstItemColor sets custom color
+ *
+ * @author Valentine Litvin
+ */
+
 class PaintWidget @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null, defStyleAttr: Int = 0

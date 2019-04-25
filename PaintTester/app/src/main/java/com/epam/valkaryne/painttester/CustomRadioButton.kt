@@ -5,8 +5,14 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
-import android.util.Log
 import androidx.appcompat.widget.AppCompatRadioButton
+
+/**
+ * [CustomRadioButton] for [PaintWidget] colorpicker. It has one attribute:
+ *  @property color responsible for the appearance of radio button
+ *
+ * @author Valentine Litvin
+ */
 
 class CustomRadioButton(context: Context?, attrs: AttributeSet?) :
     AppCompatRadioButton(context, attrs) {
