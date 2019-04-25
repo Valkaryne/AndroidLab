@@ -119,8 +119,9 @@ class PaintWidget @JvmOverloads constructor(
         override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
             val radioButton = view?.findViewById<CustomRadioButton>(checkedId)
             val color = radioButton?.color
-            hexColor = getHexColor(color)
+            color?.let { sbValue?.progressDrawable?.setTint(it) }
 
+            hexColor = getHexColor(color)
             mOnPaintWidgetChangeListener?.onColorChanged(hexColor)
         }
     }
