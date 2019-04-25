@@ -27,8 +27,6 @@ class MainActivity : AppCompatActivity() {
         tButton.setOnCheckedChangeListener { _, isChecked -> widget?.isVisible = isChecked }
 
         widget?.mOnPaintWidgetChangeListener = PaintWidgetListener()
-        widget?.firstItemColor = Color.rgb(0, 168, 107)
-        widget?.pMaxWidth = 100
         widget?.defaultColorPosition = 2
     }
 
