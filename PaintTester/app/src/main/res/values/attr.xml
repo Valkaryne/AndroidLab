@@ -3,4 +3,10 @@
     <declare-styleable name="CustomRadioButton">
         <attr name="color" format="color"/>
     </declare-styleable>
+
+    <declare-styleable name="PaintWidget">
+        <attr name="maxWidth" format="integer"/>
+        <attr name="defaultColorPosition" format="integer"/>
+        <attr name="firstItemColor" format="color"/>
+    </declare-styleable>
 </resources>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/background"
+    android:layout_width="214dp"
+    android:layout_height="156dp"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_width_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/width_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_width"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_width_title"/>
+
+    <SeekBar
+        android:id="@+id/sb_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:max="10"
+        android:min="1"
+        android:thumbTint="@android:color/white"
+        android:progressTint="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/tv_width_title"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <TextView
+        android:id="@+id/tv_colors_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:text="@string/colors_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sb_value"/>
+
+    <RadioGroup
+        android:id="@+id/rg_colors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_colors_title">
+        <com.epam.valkaryne.painttester.CustomRadioButton
+            android:id="@+id/rb_custom"
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:checked="true"/>
+        <com.epam.valkaryne.painttester.CustomRadioButton
+            android:id="@+id/rb_red"
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            app:color="@android:color/holo_red_dark"/>
+        <com.epam.valkaryne.painttester.CustomRadioButton
+            android:id="@+id/rb_green"
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            app:color="@android:color/holo_green_dark"/>
+        <com.epam.valkaryne.painttester.CustomRadioButton
+            android:id="@+id/rb_blue"
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            app:color="@android:color/holo_blue_dark"/>
+    </RadioGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>
