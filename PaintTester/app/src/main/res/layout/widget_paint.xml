@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/background"
     android:layout_width="214dp"
     android:layout_height="156dp"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <TextView
         android:id="@+id/tv_width_title"
@@ -27,14 +28,15 @@
 
     <SeekBar
         android:id="@+id/sb_value"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
         android:max="10"
         android:min="1"
         android:thumbTint="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/tv_width_title"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_width_title" />
 
     <TextView
         android:id="@+id/tv_colors_title"
@@ -78,4 +80,4 @@
             android:layout_height="18dp"
             app:color="@android:color/holo_blue_dark"/>
     </RadioGroup>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</merge>
