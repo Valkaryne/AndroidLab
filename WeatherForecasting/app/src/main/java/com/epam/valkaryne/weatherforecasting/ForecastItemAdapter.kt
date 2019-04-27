@@ -10,10 +10,14 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 
 class ForecastItemAdapter(private val cities: Array<CityInfo>) : RecyclerView.Adapter<ForecastItemAdapter.ViewHolder>() {
 
     private var context: Context? = null
+    private val transitionFactory = DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val cv = LayoutInflater.from(parent.context)
@@ -25,16 +29,21 @@ class ForecastItemAdapter(private val cities: Array<CityInfo>) : RecyclerView.Ad
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val cardView = holder.cardView
         val ivCity = cardView.findViewById<ImageView>(R.id.iv_city)
-        context?.let { Glide.with(it)
-            .load(cities[position].cityImage).into(ivCity) }
+        val tvTemperature = cardView.findViewById<TextView>(R.id.tv_temperature)
         val tvName = cardView.findViewById<TextView>(R.id.tv_name)
         tvName.text = cities[position].cityName
         val tvInfo = cardView.findViewById<TextView>(R.id.tv_info)
         tvInfo.text = cities[position].cityInfo
         val ivWeather = cardView.findViewById<ImageView>(R.id.iv_weather)
         ivWeather.setImageDrawable(getWeatherDrawable(cities[position]))
-        val tvTemperature = cardView.findViewById<TextView>(R.id.tv_temperature)
-        tvTemperature.text = cities[position].weatherData.temperature.toString()
+
+        context?.let { Glide.with(it)
+            .load(cities[position].cityImage).apply(RequestOptions.circleCropTransform())
+            .transition(withCrossFade(transitionFactory))
+            .placeholder(R.drawable.city_variant).error(R.drawable.city_error).into(ivCity)
+        tvTemperature.text = String.format(it.getString(R.string.temperature_ph),
+            cities[position].weatherData.temperature)
+        }
     }
 
     override fun getItemCount(): Int {

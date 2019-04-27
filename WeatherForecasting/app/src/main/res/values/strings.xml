@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Weather Forecasting</string>
+
+    <string name="temperature_ph">%1$s °C</string>
 </resources>

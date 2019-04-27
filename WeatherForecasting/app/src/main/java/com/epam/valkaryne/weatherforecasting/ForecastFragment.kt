@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -22,6 +23,9 @@ class ForecastFragment : Fragment() {
         val adapter = ForecastItemAdapter(CityInfo.cities)
         forecastRecycler.adapter = adapter
         forecastRecycler.layoutManager = LinearLayoutManager(activity)
+
+        val itemDecor = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+        forecastRecycler.addItemDecoration(itemDecor)
         return forecastRecycler
     }
 }
