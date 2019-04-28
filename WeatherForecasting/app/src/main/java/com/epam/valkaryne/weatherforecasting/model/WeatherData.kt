@@ -1,4 +1,4 @@
-package com.epam.valkaryne.weatherforecasting
+package com.epam.valkaryne.weatherforecasting.model
 
 data class WeatherData(val type: WeatherType, val temperature: Int) {
     enum class WeatherType{
