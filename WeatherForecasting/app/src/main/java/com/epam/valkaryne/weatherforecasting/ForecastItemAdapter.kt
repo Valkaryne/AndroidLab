@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -21,20 +21,20 @@ class ForecastItemAdapter(private val cities: Array<CityInfo>) : RecyclerView.Ad
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val cv = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_forecast, parent, false) as CardView
+            .inflate(R.layout.item_forecast, parent, false) as ConstraintLayout
         this.context = parent.context
         return ViewHolder(cv)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val cardView = holder.cardView
-        val ivCity = cardView.findViewById<ImageView>(R.id.iv_city)
-        val tvTemperature = cardView.findViewById<TextView>(R.id.tv_temperature)
-        val tvName = cardView.findViewById<TextView>(R.id.tv_name)
+        val itemView = holder.item
+        val ivCity = itemView.findViewById<ImageView>(R.id.iv_city)
+        val tvTemperature = itemView.findViewById<TextView>(R.id.tv_temperature)
+        val tvName = itemView.findViewById<TextView>(R.id.tv_name)
         tvName.text = cities[position].cityName
-        val tvInfo = cardView.findViewById<TextView>(R.id.tv_info)
+        val tvInfo = itemView.findViewById<TextView>(R.id.tv_info)
         tvInfo.text = cities[position].cityInfo
-        val ivWeather = cardView.findViewById<ImageView>(R.id.iv_weather)
+        val ivWeather = itemView.findViewById<ImageView>(R.id.iv_weather)
         ivWeather.setImageDrawable(getWeatherDrawable(cities[position]))
 
         context?.let { Glide.with(it)
@@ -64,5 +64,5 @@ class ForecastItemAdapter(private val cities: Array<CityInfo>) : RecyclerView.Ad
         return weatherDrawable
     }
 
-    inner class ViewHolder(val cardView: CardView) : RecyclerView.ViewHolder(cardView)
+    inner class ViewHolder(val item: ConstraintLayout) : RecyclerView.ViewHolder(item)
 }
