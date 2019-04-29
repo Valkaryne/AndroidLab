@@ -21,7 +21,7 @@ class ForecastFragment : Fragment() {
             R.layout.fragment_forecast, container, false
         ) as RecyclerView
 
-        val adapter = ForecastItemAdapter(CityInfo.cities)
+        val adapter = ForecastItemAdapter(CityInfo.cities, fragmentManager!!)
         forecastRecycler.adapter = adapter
         forecastRecycler.layoutManager = LinearLayoutManager(activity)
 

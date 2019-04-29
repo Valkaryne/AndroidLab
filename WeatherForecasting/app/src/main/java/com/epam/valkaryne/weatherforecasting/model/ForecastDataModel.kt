@@ -1,6 +1,7 @@
 package com.epam.valkaryne.weatherforecasting.model
 
 import com.epam.valkaryne.weatherforecasting.ForecastItemAdapter
+import com.epam.valkaryne.weatherforecasting.R
 
 class ForecastDataModel(private val forecastElements: MutableList<ForecastElement>,
                         private val adapter: ForecastItemAdapter) {
@@ -10,13 +11,7 @@ class ForecastDataModel(private val forecastElements: MutableList<ForecastElemen
     fun addFavorite(position: Int) {
         val city = forecastElements[position] as CityInfo
         city.isFavorite = true
-        if (forecastExtensionList.size == 0) {
-            forecastExtensionList.add(0,
-                Section("Favorites")
-            )
-            forecastExtensionList.add(1, Section("All"))
-        }
-        forecastExtensionList.add(1, city)
+        forecastExtensionList.add(0, city)
         refreshData()
     }
 
@@ -29,8 +24,13 @@ class ForecastDataModel(private val forecastElements: MutableList<ForecastElemen
 
     private fun refreshData() {
         forecastElements.clear()
-        if (forecastExtensionList.size > 2)
-            forecastElements.addAll(forecastExtensionList)
+        if (forecastExtensionList.size > 0) {
+            adapter.context?.let { 
+                forecastElements.add(0, Section(it.getString(R.string.favorites_section)))
+                forecastElements.add(1, Section(it.getString(R.string.all_section)))
+            }
+            forecastElements.addAll(1, forecastExtensionList)
+        }
         forecastElements.addAll(forecastBaseList)
         adapter.notifyDataSetChanged()
     }

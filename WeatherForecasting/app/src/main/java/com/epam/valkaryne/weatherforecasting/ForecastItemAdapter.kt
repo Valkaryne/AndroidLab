@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
@@ -16,9 +17,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.epam.valkaryne.weatherforecasting.model.*
 
-class ForecastItemAdapter(cities: Array<CityInfo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ForecastItemAdapter(cities: Array<CityInfo>, private val manager: FragmentManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var context: Context? = null
+    var context: Context? = null
     private val transitionFactory = DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()
 
     private val forecastElements: MutableList<ForecastElement> = cities.toMutableList()
@@ -62,8 +63,11 @@ class ForecastItemAdapter(cities: Array<CityInfo>) : RecyclerView.Adapter<Recycl
                         city.weatherData.temperature)
                 }
                 itemView.setOnClickListener {
-                    if (city.isFavorite) forecastItemListener.onItemClick(position, false)
-                    else forecastItemListener.onItemClick(position, true)
+
+                }
+                itemView.setOnLongClickListener {
+                    if (city.isFavorite) forecastItemListener.onItemLongClick(position, false)
+                    else forecastItemListener.onItemLongClick(position, true)
                 }
             }
             is SectionHolder -> {
@@ -104,11 +108,15 @@ class ForecastItemAdapter(cities: Array<CityInfo>) : RecyclerView.Adapter<Recycl
 
     inner class SectionHolder(val section: LinearLayout) : RecyclerView.ViewHolder(section)
 
-    inner class ForecastItemListener :
-        ItemClickListener {
+    inner class ForecastItemListener : ItemClickListener {
         override fun onItemClick(position: Int, addItem: Boolean) {
-            if (addItem) forecastDataModel.addFavorite(position)
-            else forecastDataModel.removeFavorite(position)
+
+        }
+
+        override fun onItemLongClick(position: Int, addItem: Boolean) : Boolean {
+            val dialogFragment = FavoritesDialog.newInstance(forecastElements[position].name, position, addItem, forecastDataModel)
+            dialogFragment.show(manager.beginTransaction(), "dialog")
+            return true
         }
     }
 
