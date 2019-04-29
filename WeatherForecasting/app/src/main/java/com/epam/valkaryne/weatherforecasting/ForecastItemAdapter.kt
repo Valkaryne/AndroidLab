@@ -2,7 +2,6 @@ package com.epam.valkaryne.weatherforecasting
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -25,9 +24,9 @@ import com.epam.valkaryne.weatherforecasting.pager.PagerFragment
  * @author Valentine Litvin
  */
 
-class ForecastItemAdapter(cities: Array<CityInfo>, private val manager: FragmentManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ForecastItemAdapter(cities: Array<CityInfo>, private val manager: FragmentManager, val context: Context?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var context: Context? = null
+    //var context: Context? = null
     private val transitionFactory = DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()
 
     private val forecastElements: MutableList<ForecastElement> = cities.toMutableList()
@@ -35,7 +34,7 @@ class ForecastItemAdapter(cities: Array<CityInfo>, private val manager: Fragment
     val forecastDataModel = ForecastDataModel(forecastElements, this)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        this.context = parent.context
+        //this.context = parent.context
 
         val itemView = LayoutInflater.from(context)
             .inflate(R.layout.item_forecast, parent, false) as ConstraintLayout

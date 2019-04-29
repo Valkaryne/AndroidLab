@@ -14,6 +14,10 @@ class ForecastDataModel(private val forecastElements: MutableList<ForecastElemen
     private val forecastBaseList: MutableList<ForecastElement> = forecastElements.toMutableList()
     private val forecastExtensionList: MutableList<ForecastElement> = ArrayList()
 
+    init {
+        restoreFavorites()
+    }
+
     fun addFavorite(position: Int) {
         val city = forecastElements[position] as CityInfo
         city.isFavorite = true
@@ -25,6 +29,14 @@ class ForecastDataModel(private val forecastElements: MutableList<ForecastElemen
         val city = forecastElements[position] as CityInfo
         city.isFavorite = false
         forecastExtensionList.remove(city)
+        refreshData()
+    }
+
+    fun restoreFavorites() {
+        forecastBaseList.forEach {
+            if ((it as CityInfo).isFavorite)
+                forecastExtensionList.add(it)
+        }
         refreshData()
     }
 
@@ -55,7 +67,7 @@ class ForecastDataModel(private val forecastElements: MutableList<ForecastElemen
     private fun refreshData() {
         forecastElements.clear()
         if (forecastExtensionList.size > 0) {
-            adapter.context?.let { 
+            adapter.context?.let {
                 forecastElements.add(0, Section(it.getString(R.string.favorites_section)))
                 forecastElements.add(1, Section(it.getString(R.string.all_section)))
             }
