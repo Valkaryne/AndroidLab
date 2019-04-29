@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Weather Forecasting</string>
 
-    <string name="temperature_ph">%1$s °C</string>
+    <string name="temperature_ph">%1$s°C</string>
+    <string name="real_feel_ph">RealFeel %1$s°</string>
+    <string name="humidity_ph">%1$s%%</string>
+    <string name="wind_speed_ph">%1$s kmh</string>
     <string name="favorites_section">Favorites</string>
     <string name="all_section">All</string>
 
@@ -15,4 +18,16 @@
     <string name="sort_alpha_desc">Alphabetic descend</string>
     <string name="sort_num_asc">Temperature ascend</string>
     <string name="sort_num_desc">Temperature descend</string>
+
+    <string name="type_clouds">Clouds</string>
+    <string name="type_sunny">Sunny</string>
+    <string name="type_rain">Rain</string>
+    <string name="type_storm">Storm</string>
+    <string name="type_snow">Snow</string>
+
+    <string name="current_title">CURRENT</string>
+    <string name="humidity_title">HUMIDITY</string>
+    <string name="uv_index_title">UV INDEX</string>
+    <string name="wind_speed_title">WIND SPEED</string>
+    <string name="uv_normal">Normal</string>
 </resources>

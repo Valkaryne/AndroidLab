@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_alpha_desc -> {
-                fragment?.sortForecastData(ForecastFragment.SORT_ALPHABETIC_DESCNED)
+                fragment?.sortForecastData(ForecastFragment.SORT_ALPHABETIC_DESCEND)
                 return true
             }
             R.id.action_num_asc -> {

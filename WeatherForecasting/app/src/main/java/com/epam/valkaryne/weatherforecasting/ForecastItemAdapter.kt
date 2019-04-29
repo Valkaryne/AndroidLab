@@ -2,6 +2,7 @@ package com.epam.valkaryne.weatherforecasting
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -16,6 +17,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.epam.valkaryne.weatherforecasting.model.*
+import com.epam.valkaryne.weatherforecasting.pager.PagerFragment
 
 class ForecastItemAdapter(cities: Array<CityInfo>, private val manager: FragmentManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -63,7 +65,7 @@ class ForecastItemAdapter(cities: Array<CityInfo>, private val manager: Fragment
                         city.weatherData.temperature)
                 }
                 itemView.setOnClickListener {
-
+                    forecastItemListener.onItemClick(position)
                 }
                 itemView.setOnLongClickListener {
                     if (city.isFavorite) forecastItemListener.onItemLongClick(position, false)
@@ -109,8 +111,13 @@ class ForecastItemAdapter(cities: Array<CityInfo>, private val manager: Fragment
     inner class SectionHolder(val section: LinearLayout) : RecyclerView.ViewHolder(section)
 
     inner class ForecastItemListener : ItemClickListener {
-        override fun onItemClick(position: Int, addItem: Boolean) {
 
+        override fun onItemClick(position: Int) {
+            val pagerFragment = PagerFragment.newInstance(forecastElements[position] as CityInfo)
+            manager.beginTransaction()
+                .replace(R.id.fragmentContainer, pagerFragment)
+                .addToBackStack(null)
+                .commit()
         }
 
         override fun onItemLongClick(position: Int, addItem: Boolean) : Boolean {
