@@ -24,7 +24,7 @@ class ForecastItemAdapter(cities: Array<CityInfo>, private val manager: Fragment
 
     private val forecastElements: MutableList<ForecastElement> = cities.toMutableList()
     private val forecastItemListener = ForecastItemListener()
-    private val forecastDataModel = ForecastDataModel(forecastElements, this)
+    val forecastDataModel = ForecastDataModel(forecastElements, this)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         this.context = parent.context

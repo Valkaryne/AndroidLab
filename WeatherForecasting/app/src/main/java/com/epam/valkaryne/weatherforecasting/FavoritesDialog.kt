@@ -1,7 +1,6 @@
 package com.epam.valkaryne.weatherforecasting
 
 import android.app.Dialog
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
@@ -25,7 +24,7 @@ class FavoritesDialog : DialogFragment() {
             if (addItem) it.getString(R.string.dialog_add)
             else it.getString(R.string.dialog_remove)
         }
-        val negText = context?.let { it.getString(R.string.dialong_cancel) }
+        val negText = context?.getString(R.string.dialong_cancel)
         val builder = context?.let { AlertDialog.Builder(it) }
         if (message != null) {
             builder?.setMessage(message)

@@ -5,7 +5,7 @@ import com.epam.valkaryne.weatherforecasting.R
 
 class ForecastDataModel(private val forecastElements: MutableList<ForecastElement>,
                         private val adapter: ForecastItemAdapter) {
-    private val forecastBaseList: List<ForecastElement> = forecastElements.toList()
+    private val forecastBaseList: MutableList<ForecastElement> = forecastElements.toMutableList()
     private val forecastExtensionList: MutableList<ForecastElement> = ArrayList()
 
     fun addFavorite(position: Int) {
@@ -22,6 +22,30 @@ class ForecastDataModel(private val forecastElements: MutableList<ForecastElemen
         refreshData()
     }
 
+    fun sortAscendingByAlphabet() {
+        forecastBaseList.sortBy { it.name }
+        forecastExtensionList.sortBy { it.name }
+        refreshData()
+    }
+
+    fun sortDescendingByAlphabet() {
+        forecastBaseList.sortByDescending { it.name }
+        forecastExtensionList.sortByDescending { it.name }
+        refreshData()
+    }
+
+    fun sortAscendingByTemperature() {
+        forecastBaseList.sortBy { (it as CityInfo).weatherData.temperature }
+        forecastExtensionList.sortBy { (it as CityInfo).weatherData.temperature }
+        refreshData()
+    }
+
+    fun sortDescendingByTemperature() {
+        forecastBaseList.sortByDescending { (it as CityInfo).weatherData.temperature }
+        forecastExtensionList.sortByDescending { (it as CityInfo).weatherData.temperature }
+        refreshData()
+    }
+
     private fun refreshData() {
         forecastElements.clear()
         if (forecastExtensionList.size > 0) {
@@ -34,4 +58,6 @@ class ForecastDataModel(private val forecastElements: MutableList<ForecastElemen
         forecastElements.addAll(forecastBaseList)
         adapter.notifyDataSetChanged()
     }
+
+
 }

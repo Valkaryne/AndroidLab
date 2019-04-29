@@ -10,4 +10,9 @@
     <string name="dialong_cancel">Cancel</string>
     <string name="add_message">Do you want to add city %1$s to favorites?</string>
     <string name="remove_message">Do you want to remove city %1$s from favorites?</string>
+
+    <string name="sort_alpha_asc">Alphabetic ascend</string>
+    <string name="sort_alpha_desc">Alphabetic descend</string>
+    <string name="sort_num_asc">Temperature ascend</string>
+    <string name="sort_num_desc">Temperature descend</string>
 </resources>
