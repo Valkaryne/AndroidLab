@@ -7,6 +7,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.epam.valkaryne.weatherforecasting.model.ForecastDataModel
 
+/**
+ * [DialogFragment] called when we performs a long click on RecyclerView item. It suggests to add/remove
+ * a chosen city to/from favorites
+ *
+ * @author Valentine Litvin
+ */
 class FavoritesDialog : DialogFragment() {
 
     private var cityName: String? = null

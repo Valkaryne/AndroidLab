@@ -3,6 +3,12 @@ package com.epam.valkaryne.weatherforecasting.model
 import com.epam.valkaryne.weatherforecasting.ForecastItemAdapter
 import com.epam.valkaryne.weatherforecasting.R
 
+/**
+ * Class for work with collections of weather. It can sort the collection and divide it on sections
+ *
+ * @author Valentine Litvin
+ */
+
 class ForecastDataModel(private val forecastElements: MutableList<ForecastElement>,
                         private val adapter: ForecastItemAdapter) {
     private val forecastBaseList: MutableList<ForecastElement> = forecastElements.toMutableList()

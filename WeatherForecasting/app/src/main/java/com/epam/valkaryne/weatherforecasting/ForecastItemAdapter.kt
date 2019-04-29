@@ -19,6 +19,12 @@ import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.epam.valkaryne.weatherforecasting.model.*
 import com.epam.valkaryne.weatherforecasting.pager.PagerFragment
 
+/**
+ * Special Adapter puts items with cities and their weather to the RecyclerView
+ *
+ * @author Valentine Litvin
+ */
+
 class ForecastItemAdapter(cities: Array<CityInfo>, private val manager: FragmentManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var context: Context? = null

@@ -2,6 +2,12 @@ package com.epam.valkaryne.weatherforecasting.model
 
 import com.epam.valkaryne.weatherforecasting.model.WeatherData.WeatherType
 
+/**
+ * Class for description of weather in the certain city. It also contains static dataset for testing.
+ *
+ * @author Valentine Litvin
+ */
+
 class CityInfo(val cityName: String, val cityInfo: String,
                     val cityImage: String, val cityDescription: String,
                     val weatherData: WeatherData

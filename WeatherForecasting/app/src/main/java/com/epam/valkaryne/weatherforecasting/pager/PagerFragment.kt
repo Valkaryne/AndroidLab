@@ -9,6 +9,11 @@ import androidx.viewpager.widget.ViewPager
 import com.epam.valkaryne.weatherforecasting.R
 import com.epam.valkaryne.weatherforecasting.model.CityInfo
 
+/**
+ * [Fragment] contains [ViewPager] with detail information
+ *
+ * @author Valentine Litvin
+ */
 class PagerFragment : Fragment() {
 
     private var cityInfo: CityInfo? = null

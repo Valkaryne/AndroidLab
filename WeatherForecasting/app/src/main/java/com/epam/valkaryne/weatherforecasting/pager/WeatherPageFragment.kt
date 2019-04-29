@@ -16,6 +16,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.random.Random
 
+/**
+ * [Fragment] contains detail information about weather in the certain city.
+ *
+ * @author Valentine Litvin
+ */
+
 class WeatherPageFragment : Fragment() {
     private var cityInfo: CityInfo? = null
 

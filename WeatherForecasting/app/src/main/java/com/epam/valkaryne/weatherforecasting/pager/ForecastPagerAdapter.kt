@@ -6,6 +6,11 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.epam.valkaryne.weatherforecasting.model.CityInfo
 
+/**
+ * Special Adapter puts pages with details to the ViewPager
+ *
+ * @author Valentine Litvin
+ */
 class ForecastPagerAdapter(fm: FragmentManager?,
                            cityInfo: CityInfo) : FragmentStatePagerAdapter(fm) {
 

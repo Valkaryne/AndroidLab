@@ -5,6 +5,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 
+/**
+ * [MainActivity] has the fragment we working with and menu with sorting actions
+ *
+ * @author Valentine Litvin
+ */
+
 class MainActivity : AppCompatActivity() {
 
     var fragment: ForecastFragment? = null

@@ -8,6 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.epam.valkaryne.weatherforecasting.model.CityInfo
 
+/**
+ * [Fragment] shows [RecyclerView] with list of cities weather of which we interested in.
+ *
+ * @author Valentine Litvin
+ */
 class ForecastFragment : Fragment() {
 
     private var adapter: ForecastItemAdapter? = null

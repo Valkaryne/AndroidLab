@@ -11,6 +11,11 @@ import com.bumptech.glide.Glide
 import com.epam.valkaryne.weatherforecasting.R
 import com.epam.valkaryne.weatherforecasting.model.CityInfo
 
+/**
+ * [Fragment] contains detail information about the certain city.
+ *
+ * @author Valentine Litvin
+ */
 class CityPageFragment : Fragment() {
 
     private var cityInfo: CityInfo? = null
