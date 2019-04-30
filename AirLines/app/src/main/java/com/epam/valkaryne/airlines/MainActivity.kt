@@ -3,6 +3,7 @@ package com.epam.valkaryne.airlines
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatDelegate
 import android.widget.Button
 
 /**
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
         val departData = DataManager.departFlightData()
         val returnData = DataManager.returnFlightData()

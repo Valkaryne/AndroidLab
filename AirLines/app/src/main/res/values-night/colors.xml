@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorIndigo">#7f8cdd</color>
+    <color name="colorLime">#429900</color>
+    <color name="colorLightBlue">#006b9b</color>
+    <color name="colorRed">#930000</color>
+
+    <color name="colorBackground">#2f2f2f</color>
+    <color name="colorButtonTint">#000</color>
+    <color name="colorGrey">#bebebe</color>
+    <color name="colorDarkGrey">#a2a2a2</color>
+    <color name="colorLightGrey">#c8c8c8</color>
+</resources>

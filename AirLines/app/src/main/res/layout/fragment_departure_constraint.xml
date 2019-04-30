@@ -219,7 +219,7 @@
             android:layout_margin="@dimen/standard"
             android:src="@drawable/ic_check"
             android:backgroundTint="@color/colorLime"
-            android:tint="@android:color/white"
+            android:tint="@color/colorButtonTint"
             app:backgroundTint="@color/colorLime"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
