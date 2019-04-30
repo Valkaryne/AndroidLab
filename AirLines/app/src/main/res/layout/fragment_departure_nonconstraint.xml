@@ -308,7 +308,7 @@
                 android:layout_gravity="center"
                 android:src="@drawable/ic_check"
                 android:backgroundTint="@color/colorLime"
-                android:tint="@android:color/white"
+                android:tint="@color/colorButtonTint"
                 app:backgroundTint="@color/colorLime"/>
         </FrameLayout>
     </LinearLayout>
