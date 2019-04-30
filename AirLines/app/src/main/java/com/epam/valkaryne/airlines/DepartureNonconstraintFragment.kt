@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import com.epam.valkaryne.airlines.utils.FlightData
 
 /**
@@ -20,6 +19,7 @@ class DepartureNonconstraintFragment : Fragment() {
 
     private var departData: FlightData? = null
     private var returnData: FlightData? = null
+    private var themeInterface: ThemeInterface? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +35,7 @@ class DepartureNonconstraintFragment : Fragment() {
 
         val fab = view.findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener {
-            Toast.makeText(context, "[Nonconstraint]: Flight Booked", Toast.LENGTH_SHORT).show()
+            themeInterface?.switchNightMode()
         }
     }
 
@@ -82,11 +82,12 @@ class DepartureNonconstraintFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(departData: FlightData, returnData: FlightData) : DepartureNonconstraintFragment {
+        fun newInstance(departData: FlightData, returnData: FlightData, themeInterface: ThemeInterface) : DepartureNonconstraintFragment {
             val fragment = DepartureNonconstraintFragment()
 
             fragment.departData = departData
             fragment.returnData = returnData
+            fragment.themeInterface = themeInterface
 
             return fragment
         }

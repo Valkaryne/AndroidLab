@@ -1,5 +1,6 @@
 package com.epam.valkaryne.airlines
 
+import android.content.res.Configuration
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -16,41 +17,45 @@ import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
 
-    var isConstraint = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
-        val departData = DataManager.departFlightData()
-        val returnData = DataManager.returnFlightData()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO)
 
         val btnShowConstraint = findViewById<Button>(R.id.btn_show_constraint)
         val btnShowNonconstraint = findViewById<Button>(R.id.btn_show_nonconstraint)
 
-        if (savedInstanceState != null)
-            isConstraint = savedInstanceState.getBoolean(KEY_LAYOUT_TYPE)
+        val departData = DataManager.departFlightData()
+        val returnData = DataManager.returnFlightData()
 
-        replaceFragment(
-            if (isConstraint) DepartureConstraintFragment.newInstance(departData, returnData)
-            else DepartureNonconstraintFragment.newInstance(departData, returnData)
-        )
+        val themeSwitcher = ThemeSwitcher()
+        val fragmentConstraint = DepartureConstraintFragment.newInstance(departData, returnData, themeSwitcher)
+        val fragmentNonconstraint = DepartureNonconstraintFragment.newInstance(departData, returnData, themeSwitcher)
+
+        if (savedInstanceState == null)
+            replaceFragment(fragmentConstraint)
+        else {
+            val isConstraint = savedInstanceState.getBoolean(KEY_LAYOUT_TYPE)
+            replaceFragment(
+                if (isConstraint) fragmentConstraint
+                else fragmentNonconstraint
+            )
+        }
 
         btnShowConstraint.setOnClickListener {
-            replaceFragment(DepartureConstraintFragment.newInstance(departData, returnData))
+            replaceFragment(fragmentConstraint)
         }
 
         btnShowNonconstraint.setOnClickListener {
-            replaceFragment(DepartureNonconstraintFragment.newInstance(departData, returnData))
+            replaceFragment(fragmentNonconstraint)
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
-        isConstraint = fragment is DepartureConstraintFragment
+        val isConstraint = fragment is DepartureConstraintFragment
 
         outState?.putBoolean(KEY_LAYOUT_TYPE, isConstraint)
     }
@@ -59,6 +64,15 @@ class MainActivity : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragmentContainer, fragment)
         transaction.commit()
+    }
+
+    inner class ThemeSwitcher : ThemeInterface {
+        override fun switchNightMode() {
+            when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_NO -> delegate.setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                Configuration.UI_MODE_NIGHT_YES -> delegate.setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
     }
 
     private companion object {
