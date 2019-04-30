@@ -11,7 +11,7 @@ import com.epam.valkaryne.airlines.utils.FlightData
 
 /**
  * A simple [Fragment] subclass. Based on Linear and Relative Layouts to display [FlightData] for airlines.
- * Has one Floating Action Button displays Toast.
+ * Has one Floating Action Button displays switches night mode.
  *
  * @author Valentine Litvin
  */
