@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatDelegate
 import android.widget.Button
+import com.epam.valkaryne.airlines.utils.DataManager
 
 /**
  * [MainActivity] class for layout demonstration. Has two buttons.
@@ -35,13 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null)
             replaceFragment(fragmentConstraint)
-        else {
-            val isConstraint = savedInstanceState.getBoolean(KEY_LAYOUT_TYPE)
-            replaceFragment(
-                if (isConstraint) fragmentConstraint
-                else fragmentNonconstraint
-            )
-        }
 
         btnShowConstraint.setOnClickListener {
             replaceFragment(fragmentConstraint)
@@ -58,6 +52,13 @@ class MainActivity : AppCompatActivity() {
         val isConstraint = fragment is DepartureConstraintFragment
 
         outState?.putBoolean(KEY_LAYOUT_TYPE, isConstraint)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
+        if (fragment is DepartureFragment)
+            fragment.themeInterface = ThemeSwitcher()
     }
 
     private fun replaceFragment(fragment: Fragment) {
