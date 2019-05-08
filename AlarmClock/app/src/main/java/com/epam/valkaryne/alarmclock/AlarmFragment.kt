@@ -2,8 +2,10 @@ package com.epam.valkaryne.alarmclock
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -46,16 +48,16 @@ class AlarmFragment : Fragment() {
     private fun saveAlarm(calendar: Calendar) {
         val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
 
-        editor.putLong(PREF_ALARM_TIME, calendar.timeInMillis)
+        editor.putLong(Constants.PREF_ALARM_TIME, calendar.timeInMillis)
         editor.apply()
     }
 
     private fun loadAlarm() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-        if (prefs.contains(PREF_ALARM_TIME)) {
+        if (prefs.contains(Constants.PREF_ALARM_TIME)) {
             val calendar = Calendar.getInstance()
-            val time = prefs.getLong(PREF_ALARM_TIME, 0)
+            val time = prefs.getLong(Constants.PREF_ALARM_TIME, 0)
             calendar.timeInMillis = time
             tvAlarmTime?.text = calendar.getAlarmFormattedTime()
         }
@@ -65,8 +67,8 @@ class AlarmFragment : Fragment() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = prefs.edit()
 
-        if (prefs.contains(PREF_ALARM_TIME))
-            editor.remove(PREF_ALARM_TIME)
+        if (prefs.contains(Constants.PREF_ALARM_TIME))
+            editor.remove(Constants.PREF_ALARM_TIME)
         editor.apply()
     }
 
@@ -75,11 +77,12 @@ class AlarmFragment : Fragment() {
         alarmManager?.let {
             val intent = Intent(context, AlarmReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(
-                context, RQS_ALARM, intent, 0)
+                context, Constants.RQS_ALARM, intent, 0)
             it.setRepeating(AlarmManager.RTC_WAKEUP, targetCalendar.timeInMillis,
-                TimeUnit.DAYS.toMillis(1), pendingIntent)
+                TimeUnit.MINUTES.toMillis(5), pendingIntent)
             tvAlarmTime?.text = targetCalendar.getAlarmFormattedTime()
             saveAlarm(targetCalendar)
+            setBootReceiverEnabled(true)
         }
     }
 
@@ -90,9 +93,26 @@ class AlarmFragment : Fragment() {
 
             val intent = Intent(context, AlarmReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(
-                context, RQS_ALARM, intent, 0)
+                context, Constants.RQS_ALARM, intent, 0)
             it.cancel(pendingIntent)
             clearAlarm()
+            setBootReceiverEnabled(false)
+        }
+    }
+
+    private fun setBootReceiverEnabled(stateEnabled: Boolean) {
+        context?.let {
+            val receiver = ComponentName(it, BootReceiver::class.java)
+            val pm = it.packageManager
+
+            if (stateEnabled)
+                pm.setComponentEnabledSetting(receiver,
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP)
+            else
+                pm.setComponentEnabledSetting(receiver,
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP)
         }
     }
 
@@ -124,11 +144,6 @@ class AlarmFragment : Fragment() {
         override fun onClick(p0: View?) {
             resetAlarm()
         }
-    }
-
-    companion object {
-        const val RQS_ALARM = 1
-        const val PREF_ALARM_TIME = "alarm_time"
     }
 
 }
