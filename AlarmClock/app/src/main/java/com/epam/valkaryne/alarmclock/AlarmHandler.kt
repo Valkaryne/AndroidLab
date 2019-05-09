@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.preference.PreferenceManager
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import java.util.*
@@ -34,97 +33,44 @@ class AlarmHandler {
             if (now >= targetCalendar)
                 targetCalendar.add(Calendar.DATE, 1)
 
-            val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
-            alarmManager?.let {
-                val intent = Intent(context, AlarmReceiver::class.java)
-                intent.action = ACTION_ALARM
-                val pendingIntent = PendingIntent.getBroadcast(
-                    context, RQS_ALARM, intent, 0)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    it.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
-                        targetCalendar.timeInMillis, pendingIntent)
-                } else {
-                    it.setExact(AlarmManager.RTC_WAKEUP,
-                        targetCalendar.timeInMillis, pendingIntent)
-                }
-                saveAlarm(context, targetCalendar)
-                setBootReceiverEnabled(context, true)
+            sendSignal(context, targetCalendar, ACTION_ALARM, RQS_ALARM)
+            saveAlarm(context, targetCalendar)
+            setBootReceiverEnabled(context, true)
 
-                setNotification(context, targetCalendar)
-            }
-        }
-
-        fun setNotification(context: Context?, target: Calendar) {
-            target.add(Calendar.MINUTE, -5)
-            Log.d("SuperCat", target.getAlarmFormattedTime())
-
-            val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
-            alarmManager?.let {
-                val intent = Intent(context, AlarmReceiver::class.java)
-                intent.action = ACTION_NOTIFICATION
-                val pendingIntent = PendingIntent.getBroadcast(
-                    context, RQS_NOTIFICATION, intent, 0)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    it.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
-                        target.timeInMillis, pendingIntent)
-                } else {
-                    it.setExact(AlarmManager.RTC_WAKEUP,
-                        target.timeInMillis, pendingIntent)
-                }
-            }
+            setNotification(context, targetCalendar)
         }
 
         fun resetAlarm(context: Context?) {
-            val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
-            alarmManager?.let {
-                val intent = Intent(context, AlarmReceiver::class.java)
-                val pendingIntent = PendingIntent.getBroadcast(
-                    context, RQS_ALARM, intent, 0)
-                it.cancel(pendingIntent)
-                clearAlarm(context)
-                setBootReceiverEnabled(context, false)
-            }
+            interruptSignal(context, ACTION_ALARM, RQS_ALARM)
+            cancelNotification(context)
+
+            clearAlarm(context)
+            setBootReceiverEnabled(context, false)
         }
 
         fun showNotification(context: Context?) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                 createNotificationChannel(context)
 
-            val notification = createNotification(context, Calendar.getInstance())
+            val notification = createNotification(context)
             val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE)
                     as NotificationManager?
-            Log.d("SuperCat", "Meow")
             notificationManager?.notify(NOTIFICATION_ID, notification)
         }
 
         fun cancelNotification(context: Context?) {
+            interruptSignal(context, ACTION_NOTIFICATION, RQS_NOTIFICATION)
+
             val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE)
                     as NotificationManager?
             notificationManager?.cancel(NOTIFICATION_ID)
-        }
-
-        fun createNotification(context: Context?, calendar: Calendar) : Notification {
-            val intent = Intent(context, AlarmReceiver::class.java)
-            intent.action = ACTION_CANCEL
-            val pendingIntent = PendingIntent.getBroadcast(context, RQS_CANCEL, intent, 0)
-
-            calendar.add(Calendar.MINUTE, 5)
-
-            return NotificationCompat.Builder(context!!, CHANNEL_ID)
-                .setContentTitle(context.getString(R.string.alarm_clock_title))
-                .setContentText(calendar.getAlarmFormattedTime())
-                .setSmallIcon(R.drawable.ic_alarm)
-                .setAutoCancel(true)
-                .addAction(R.drawable.ic_close, context.getString(R.string.cancel_action),
-                    pendingIntent)
-                .build()
         }
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun createNotificationChannel(context: Context?) {
             val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
             val manager = context?.getSystemService(Context.NOTIFICATION_SERVICE)
-                    as NotificationManager
+                    as NotificationManager?
             manager?.createNotificationChannel(channel)
         }
 
@@ -155,6 +101,55 @@ class AlarmHandler {
             if (prefs.contains(PREF_ALARM_TIME))
                 editor.remove(PREF_ALARM_TIME)
             editor.apply()
+        }
+
+        private fun setNotification(context: Context?, target: Calendar) {
+            target.add(Calendar.MINUTE, -5)
+
+            sendSignal(context, target, ACTION_NOTIFICATION, RQS_NOTIFICATION)
+        }
+
+        private fun createNotification(context: Context?) : Notification {
+            val intent = Intent(context, AlarmReceiver::class.java)
+            intent.action = ACTION_CANCEL
+            val pendingIntent = PendingIntent.getBroadcast(context, RQS_CANCEL, intent, 0)
+
+            return NotificationCompat.Builder(context!!, CHANNEL_ID)
+                .setContentTitle(context.getString(R.string.alarm_clock_title))
+                .setContentText(loadAlarm(context)?.getAlarmFormattedTime())
+                .setSmallIcon(R.drawable.ic_alarm)
+                .setAutoCancel(true)
+                .addAction(R.drawable.ic_close, context.getString(R.string.cancel_action),
+                    pendingIntent)
+                .build()
+        }
+
+        private fun sendSignal(context: Context?, calendar: Calendar, action: String, request: Int) {
+            val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
+            alarmManager?.let {
+                val intent = Intent(context, AlarmReceiver::class.java)
+                intent.action = action
+                val pendingIntent = PendingIntent.getBroadcast(
+                    context, request, intent, 0)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    it.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
+                        calendar.timeInMillis, pendingIntent)
+                } else {
+                    it.setExact(AlarmManager.RTC_WAKEUP,
+                        calendar.timeInMillis, pendingIntent)
+                }
+            }
+        }
+
+        private fun interruptSignal(context: Context?, action: String, request: Int) {
+            val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
+            alarmManager?.let {
+                val intent = Intent(context, AlarmReceiver::class.java)
+                intent.action = action
+                val pendingIntent = PendingIntent.getBroadcast(
+                    context, request, intent, 0)
+                it.cancel(pendingIntent)
+            }
         }
 
         private fun setBootReceiverEnabled(context: Context?, stateEnabled: Boolean) {
