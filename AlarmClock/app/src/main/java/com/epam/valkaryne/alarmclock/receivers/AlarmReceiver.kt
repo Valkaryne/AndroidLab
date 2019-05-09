@@ -1,9 +1,20 @@
-package com.epam.valkaryne.alarmclock
+package com.epam.valkaryne.alarmclock.receivers
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import com.epam.valkaryne.alarmclock.AlarmActivity
+import com.epam.valkaryne.alarmclock.model.AlarmHandler
 import java.util.*
+
+/**
+ * Broadcast receiver of AlarmManager signals. Can behave in three ways:
+ *  - starts [AlarmActivity] with ringtone
+ *  - shows notification 5 minutes before starting [AlarmActivity]
+ *  - postpones alarm for the next time
+ *
+ *  @author Valentine Litvin
+ */
 
 class AlarmReceiver : BroadcastReceiver() {
 

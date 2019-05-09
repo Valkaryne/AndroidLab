@@ -1,4 +1,4 @@
-package com.epam.valkaryne.alarmclock
+package com.epam.valkaryne.alarmclock.utils
 
 import java.text.SimpleDateFormat
 import java.util.*

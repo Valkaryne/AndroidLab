@@ -6,6 +6,13 @@ import android.os.*
 import androidx.appcompat.app.AppCompatActivity
 import me.jfenn.slideactionview.SlideActionView
 
+/**
+ * Activity launched by the alarm broadcast receiver. It has an interactive slider to finish this
+ * activity. During its existence activity makes the device vibrate and play ringtone.
+ *
+ * @author Valentine Litvin
+ */
+
 class AlarmActivity : AppCompatActivity() {
 
     private var vibrator: Vibrator? = null

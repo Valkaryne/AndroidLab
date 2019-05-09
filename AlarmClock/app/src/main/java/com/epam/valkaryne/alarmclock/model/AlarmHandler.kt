@@ -1,4 +1,4 @@
-package com.epam.valkaryne.alarmclock
+package com.epam.valkaryne.alarmclock.model
 
 import android.app.*
 import android.content.ComponentName
@@ -9,7 +9,18 @@ import android.os.Build
 import android.preference.PreferenceManager
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import com.epam.valkaryne.alarmclock.R
+import com.epam.valkaryne.alarmclock.utils.getAlarmFormattedTime
+import com.epam.valkaryne.alarmclock.receivers.AlarmReceiver
+import com.epam.valkaryne.alarmclock.receivers.BootReceiver
 import java.util.*
+
+/**
+ * Model class for handling Alarm Data. It responsible for setting alarms and notifications and
+ * for saving alarm timings as preferences.
+ *
+ * @author Valentine Litvin
+ */
 
 class AlarmHandler {
     companion object {
@@ -68,7 +79,8 @@ class AlarmHandler {
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun createNotificationChannel(context: Context?) {
-            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
+            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_HIGH)
             val manager = context?.getSystemService(Context.NOTIFICATION_SERVICE)
                     as NotificationManager?
             manager?.createNotificationChannel(channel)
@@ -112,14 +124,17 @@ class AlarmHandler {
         private fun createNotification(context: Context?) : Notification {
             val intent = Intent(context, AlarmReceiver::class.java)
             intent.action = ACTION_CANCEL
-            val pendingIntent = PendingIntent.getBroadcast(context, RQS_CANCEL, intent, 0)
+            val pendingIntent = PendingIntent.getBroadcast(context,
+                RQS_CANCEL, intent, 0)
 
             return NotificationCompat.Builder(context!!, CHANNEL_ID)
                 .setContentTitle(context.getString(R.string.alarm_clock_title))
-                .setContentText(loadAlarm(context)?.getAlarmFormattedTime())
+                .setContentText(
+                    loadAlarm(context)?.getAlarmFormattedTime())
                 .setSmallIcon(R.drawable.ic_alarm)
                 .setAutoCancel(true)
-                .addAction(R.drawable.ic_close, context.getString(R.string.cancel_action),
+                .addAction(
+                    R.drawable.ic_close, context.getString(R.string.cancel_action),
                     pendingIntent)
                 .build()
         }

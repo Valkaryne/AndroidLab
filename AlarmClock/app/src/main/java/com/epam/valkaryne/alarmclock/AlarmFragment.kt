@@ -9,7 +9,19 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
+import com.epam.valkaryne.alarmclock.model.AlarmHandler
+import com.epam.valkaryne.alarmclock.utils.getAlarmFormattedTime
 import java.util.*
+
+/**
+ * The Fragment disposed on the MainActivity layout and provides simple UI. It has:
+ *  - TimePicker to choose alarm timing
+ *  - Button to set the chosen timing to Alarm Manager
+ *  - TextView to display alarm timing
+ *  - Button to reset alarm
+ *
+ *  @author Valentine Litvin
+ */
 
 class AlarmFragment : Fragment() {
 

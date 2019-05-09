@@ -3,6 +3,12 @@ package com.epam.valkaryne.alarmclock
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
+/**
+ * Main activity contains fragment with basic UI.
+ *
+ * @author Valentine Litvin
+ */
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
