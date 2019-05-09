@@ -1,9 +1,9 @@
 package com.epam.valkaryne.alarmclock
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.os.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import me.jfenn.slideactionview.SlideActionView
 
 class AlarmActivity : AppCompatActivity() {
@@ -12,13 +12,19 @@ class AlarmActivity : AppCompatActivity() {
     private var handler: Handler? = null
     private var vibrationRunnable = VibratorInfinite()
 
+    private var ringtonePlayer: MediaPlayer? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm)
 
         val slideView = findViewById<SlideActionView>(R.id.slideView)
-        slideView.setRightIcon(VectorDrawableCompat.create(resources, R.drawable.ic_close, theme))
+        slideView.setLeftIcon(getDrawable(R.drawable.ic_close))
+        slideView.setRightIcon(getDrawable(R.drawable.ic_close))
         slideView.setListener(SlideActionListener())
+
+        ringtonePlayer = MediaPlayer.create(this, R.raw.ringtone)
+        ringtonePlayer?.start()
 
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         handler = Handler(Looper.getMainLooper())
@@ -29,6 +35,7 @@ class AlarmActivity : AppCompatActivity() {
         super.onDestroy()
 
         handler?.removeCallbacks(vibrationRunnable)
+        ringtonePlayer?.stop()
     }
 
     inner class VibratorInfinite : Runnable {
