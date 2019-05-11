@@ -4,6 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.maps.model.LatLng
 
+/**
+ * ViewModel to keep state of MainActivity and its Fragments. Contains Geo Data.
+ *
+ * @author Valentine Litvin
+ */
 class GeoViewModel : ViewModel() {
 
     val targetLatLng: MutableLiveData<LatLng> = MutableLiveData()

@@ -5,6 +5,11 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.epam.valkaryne.geolocation.R
 
+/**
+ * [MainActivity] that contains two fragments: one with interactive map, and one with controls.
+ *
+ * @author Valentine Litvin
+ */
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

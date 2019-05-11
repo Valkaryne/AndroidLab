@@ -2,7 +2,6 @@ package com.epam.valkaryne.geolocation.ui
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.epam.valkaryne.geolocation.viewmodel.GeoViewModel
@@ -11,6 +10,12 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+
+/**
+ * Fragment responsible for interacting with map.
+ *
+ * @author Valentine Litvin
+ */
 
 class MapFragment : SupportMapFragment() {
 
