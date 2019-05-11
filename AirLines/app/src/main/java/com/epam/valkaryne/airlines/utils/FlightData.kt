@@ -1,7 +1,7 @@
 package com.epam.valkaryne.airlines.utils
 
-import java.time.LocalDate
-import java.util.*
+import android.os.Parcelable
+import android.os.Parcel
 
 /**
  * Data class for data will displayed on the screen.
@@ -9,38 +9,49 @@ import java.util.*
  * @author Valentine Litvin
  */
 
-data class FlightData(val inDepart: String,
-                      val inArrival: String,
-                      val inDate: LocalDate,
+data class FlightData(val depart: String?,
+                      val arrival: String?,
+                      val date: String?,
                       val price: Int,
-                      val inTakeoffTime: FlightTime,
-                      val inLandingTime: FlightTime,
+                      val takeoffTime: String?,
+                      val landingTime: String?,
+                      val duration: String?,
                       val freeSeats: Int,
-                      val inCurrency: Currency = Currency.getInstance("BYR")) {
+                      val currency: String?) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readInt(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readInt(),
+        parcel.readString())
 
-    var depart : String = inDepart
-        set(value) {
-            field = if (value.length > 3)
-                value.substring(0, 3).capitalize()
-            else
-                value.capitalize()
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(depart)
+        parcel.writeString(arrival)
+        parcel.writeString(date)
+        parcel.writeInt(price)
+        parcel.writeString(takeoffTime)
+        parcel.writeString(landingTime)
+        parcel.writeString(duration)
+        parcel.writeInt(freeSeats)
+        parcel.writeString(currency)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<FlightData> {
+        override fun createFromParcel(parcel: Parcel): FlightData {
+            return FlightData(parcel)
         }
 
-    var arrival : String = inArrival
-        set(value) {
-            field = if (value.length > 3)
-                value.substring(0, 3).capitalize()
-            else
-                value.capitalize()
+        override fun newArray(size: Int): Array<FlightData?> {
+            return arrayOfNulls(size)
         }
-
-    var date : String = "${inDate.dayOfMonth} ${inDate.month.toString().substring(0,3)} ${inDate.year}"
-
-    var takeoffTime : String = inTakeoffTime.time
-
-    var landingTime : String = inLandingTime.time
-
-    var duration : String = (inLandingTime - inTakeoffTime).time
-
-    var currency : String = inCurrency.currencyCode
+    }
 }

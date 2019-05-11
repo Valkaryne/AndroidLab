@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AlarmClock</string>
+    <string name="set_alarm">Set Alarm</string>
+    <string name="reset_alarm">Reset Alarm</string>
+    <string name="no_alarm">NO ALARM</string>
+    <string name="msg_sample0">Your time is over!</string>
+    <string name="alarm_clock_title">Alarm Clock</string>
+    <string name="cancel_action">Cancel</string>
+</resources>
