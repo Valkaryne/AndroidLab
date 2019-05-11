@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/standard">
+
+    <EditText
+        android:id="@+id/et_latitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="5"
+        android:hint="@string/lat_input"
+        android:inputType="numberDecimal|numberSigned"
+        android:maxLength="9"
+        android:maxLines="1" />
+
+    <EditText
+        android:id="@+id/et_longitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standard"
+        android:layout_toEndOf="@id/et_latitude"
+        android:ems="5"
+        android:hint="@string/lng_input"
+        android:inputType="numberDecimal|numberSigned"
+        android:maxLength="9"
+        android:maxLines="1" />
+
+    <ToggleButton
+        android:id="@+id/btn_toggle_marker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_latitude"
+        android:textOff="@string/set"
+        android:textOn="@string/reset" />
+
+    <Switch
+        android:id="@+id/sw_track"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_latitude"
+        android:layout_alignTop="@id/btn_toggle_marker"
+        android:layout_alignBottom="@id/btn_toggle_marker"
+        android:layout_marginStart="@dimen/standard"
+        android:layout_toEndOf="@id/btn_toggle_marker"
+        android:switchPadding="10dp"
+        android:text="@string/track_text" />
+
+</RelativeLayout>

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Geolocation</string>
+    <string name="lat_input">Latitude</string>
+    <string name="lng_input">Longitude</string>
+    <string name="reset">Reset</string>
+    <string name="set">Set</string>
+    <string name="track_text">Track your position</string>
 </resources>

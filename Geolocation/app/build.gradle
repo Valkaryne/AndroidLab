@@ -37,4 +37,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
+    // Google Play Services
+    implementation 'com.google.android.gms:play-services:12.0.1'
 }
