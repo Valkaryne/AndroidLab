@@ -26,23 +26,31 @@
         android:maxLength="9"
         android:maxLines="1" />
 
-    <ToggleButton
-        android:id="@+id/btn_toggle_marker"
+    <Button
+        android:id="@+id/btn_set_marker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/et_latitude"
-        android:textOff="@string/set"
-        android:textOn="@string/reset" />
+        android:text="@string/set" />
+
+    <Button
+        android:id="@+id/btn_reset_marker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_latitude"
+        android:layout_marginStart="@dimen/standard"
+        android:layout_toEndOf="@id/btn_set_marker"
+        android:text="@string/reset" />
 
     <Switch
         android:id="@+id/sw_track"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/et_latitude"
-        android:layout_alignTop="@id/btn_toggle_marker"
-        android:layout_alignBottom="@id/btn_toggle_marker"
+        android:layout_alignTop="@id/btn_reset_marker"
+        android:layout_alignBottom="@id/btn_reset_marker"
         android:layout_marginStart="@dimen/standard"
-        android:layout_toEndOf="@id/btn_toggle_marker"
+        android:layout_toEndOf="@id/btn_reset_marker"
         android:switchPadding="10dp"
         android:text="@string/track_text" />
 
