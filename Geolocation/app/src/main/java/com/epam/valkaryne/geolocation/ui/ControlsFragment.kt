@@ -12,13 +12,14 @@ import androidx.lifecycle.ViewModelProviders
 import com.epam.valkaryne.geolocation.R
 import com.epam.valkaryne.geolocation.viewmodel.GeoViewModel
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.textfield.TextInputEditText
 
 class ControlsFragment : Fragment() {
 
     private var viewModel: GeoViewModel? = null
 
-    private var etLatitude: EditText? = null
-    private var etLongitude: EditText? = null
+    private var etLatitude: TextInputEditText? = null
+    private var etLongitude: TextInputEditText? = null
 
     private val targetObserver =
         Observer<LatLng> { point ->
@@ -52,6 +53,11 @@ class ControlsFragment : Fragment() {
             val lng = etLongitude?.text?.toString()?.toDouble()
             if ((lat != null) && (lng != null))
                 viewModel?.targetLatLng?.value = LatLng(lat, lng)
+        }
+
+        val btnReset = view.findViewById<Button>(R.id.btn_reset_marker)
+        btnReset.setOnClickListener {
+            viewModel?.geoRequest?.value = GeoViewModel.RQS_RESET_TARGET
         }
     }
 }

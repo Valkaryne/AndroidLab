@@ -4,34 +4,46 @@
     android:layout_height="match_parent"
     android:padding="@dimen/standard">
 
-    <EditText
-        android:id="@+id/et_latitude"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textinput_latitude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="5"
-        android:hint="@string/lat_input"
-        android:inputType="numberDecimal|numberSigned"
-        android:maxLength="9"
-        android:maxLines="1" />
+        android:hint="@string/lat_input">
 
-    <EditText
-        android:id="@+id/et_longitude"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_latitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="5"
+            android:inputType="numberDecimal|numberSigned"
+            android:maxLength="9"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textinput_longitude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/standard"
-        android:layout_toEndOf="@id/et_latitude"
-        android:ems="5"
-        android:hint="@string/lng_input"
-        android:inputType="numberDecimal|numberSigned"
-        android:maxLength="9"
-        android:maxLines="1" />
+        android:layout_toEndOf="@id/textinput_latitude"
+        android:hint="@string/lng_input">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_longitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="5"
+            android:inputType="numberSigned|numberDecimal"
+            android:maxLength="9"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_set_marker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/standard"
-        android:layout_toEndOf="@id/et_longitude"
+        android:layout_toEndOf="@id/textinput_longitude"
         android:text="@string/set"/>
 
     <Button
