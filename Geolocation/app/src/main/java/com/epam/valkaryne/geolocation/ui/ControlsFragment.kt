@@ -1,14 +1,19 @@
 package com.epam.valkaryne.geolocation.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Switch
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.room.Room
 import com.epam.valkaryne.geolocation.R
+import com.epam.valkaryne.geolocation.room.MapObject
+import com.epam.valkaryne.geolocation.room.MapObjectDB
 import com.epam.valkaryne.geolocation.viewmodel.GeoViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.textfield.TextInputEditText
@@ -26,9 +31,11 @@ import com.google.android.material.textfield.TextInputEditText
 class ControlsFragment : Fragment() {
 
     private var viewModel: GeoViewModel? = null
+    private var database: MapObjectDB? = null
 
     private var etLatitude: TextInputEditText? = null
     private var etLongitude: TextInputEditText? = null
+    private var swTrack: Switch? = null
 
     private val targetObserver =
         Observer<LatLng> { point ->
@@ -38,7 +45,12 @@ class ControlsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.let { viewModel = ViewModelProviders.of(it).get(GeoViewModel::class.java) }
+        activity?.let {
+            viewModel = ViewModelProviders.of(it).get(GeoViewModel::class.java)
+            database = Room.databaseBuilder(it, MapObjectDB::class.java, "modb")
+                .allowMainThreadQueries()
+                .build()
+        }
     }
 
     override fun onCreateView(
@@ -68,5 +80,34 @@ class ControlsFragment : Fragment() {
         btnReset.setOnClickListener {
             viewModel?.geoRequest?.value = GeoViewModel.RQS_RESET_TARGET
         }
+
+        swTrack = view.findViewById(R.id.sw_track)
+        swTrack?.setOnCheckedChangeListener { _, b ->
+            when (b) {
+                true -> saveLastTrackedTarget()
+                false -> deleteLastTrackedTarget()
+            }
+        }
+
+        obtainLastTrackedTarget()
+    }
+
+    private fun saveLastTrackedTarget() {
+        val position = viewModel?.targetLatLng?.value
+        position?.let {
+            database?.getMapObjectDAO()?.insert(MapObject("target_0", it.latitude, it.longitude))
+        }
+    }
+
+    private fun obtainLastTrackedTarget() {
+        val mapObject = database?.getMapObjectDAO()?.getMapObject("target_0")
+        mapObject?.let {
+            viewModel?.targetLatLng?.value = LatLng(it.latitude, it.longitude)
+            swTrack?.isChecked = true
+        }
+    }
+
+    private fun deleteLastTrackedTarget() {
+        database?.getMapObjectDAO()?.deleteById("target_0")
     }
 }
