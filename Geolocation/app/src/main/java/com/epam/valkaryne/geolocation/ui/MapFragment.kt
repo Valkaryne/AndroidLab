@@ -4,6 +4,8 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.epam.valkaryne.geolocation.R
+import com.epam.valkaryne.geolocation.utils.MapUtils
 import com.epam.valkaryne.geolocation.viewmodel.GeoViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -21,12 +23,19 @@ class MapFragment : SupportMapFragment() {
 
     private var viewModel: GeoViewModel? = null
     private var map: GoogleMap? = null
+    private var user: Marker? = null
     private var target: Marker? = null
     private var targetArea: Circle? = null
 
+    private val userObserver =
+        Observer<LatLng> { position ->
+            user?.position = position
+        }
+
     private val targetObserver =
         Observer<LatLng> { point ->
-            val defaultIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
+            val defaultIcon =
+                BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
             target = target.setMapObject(point, defaultIcon)
 
             redrawTargetArea(point)
@@ -74,6 +83,14 @@ class MapFragment : SupportMapFragment() {
             val htp = LatLng(53.927052, 27.681375)
             map?.moveCamera(CameraUpdateFactory.newLatLngZoom(htp, 16F))
 
+            val userDescriptor = MapUtils.createMarkerItemFromDrawable(
+                context?.getDrawable(
+                    R.drawable.ic_android
+                )
+            )
+            user = user.setMapObject(htp, userDescriptor)
+
+            viewModel?.userLatLng?.observe(this@MapFragment, userObserver)
             viewModel?.targetLatLng?.observe(this@MapFragment, targetObserver)
             viewModel?.geoRequest?.observe(this@MapFragment, geoRequestObserver)
         }
@@ -83,7 +100,8 @@ class MapFragment : SupportMapFragment() {
         override fun onMapClick(point: LatLng) {
             viewModel?.targetLatLng?.value = point
 
-            val defaultIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
+            val defaultIcon =
+                BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
             target = target.setMapObject(point, defaultIcon)
         }
     }

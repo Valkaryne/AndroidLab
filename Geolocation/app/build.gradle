@@ -43,5 +43,6 @@ dependencies {
     implementation 'androidx.room:room-ktx:2.1.0-alpha07'
     kapt 'androidx.room:room-compiler:2.1.0-alpha07'
     // Google Play Services
-    implementation 'com.google.android.gms:play-services:12.0.1'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.google.android.gms:play-services-maps:16.1.0'
 }
