@@ -1,7 +1,6 @@
 package com.epam.valkaryne.geolocation.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -84,8 +83,14 @@ class ControlsFragment : Fragment() {
         swTrack = view.findViewById(R.id.sw_track)
         swTrack?.setOnCheckedChangeListener { _, b ->
             when (b) {
-                true -> saveLastTrackedTarget()
-                false -> deleteLastTrackedTarget()
+                true -> {
+                    saveLastTrackedTarget()
+                    viewModel?.trackingEnabled?.value = true
+                }
+                false -> {
+                    deleteLastTrackedTarget()
+                    viewModel?.trackingEnabled?.value = false
+                }
             }
         }
 

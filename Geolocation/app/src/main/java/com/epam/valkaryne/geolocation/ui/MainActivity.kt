@@ -2,14 +2,17 @@ package com.epam.valkaryne.geolocation.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.epam.valkaryne.geolocation.R
+import com.epam.valkaryne.geolocation.background.GeofenceForegroundService
 import com.epam.valkaryne.geolocation.viewmodel.GeoViewModel
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
@@ -25,6 +28,14 @@ class MainActivity : AppCompatActivity() {
     private var viewModel: GeoViewModel? = null
 
     private var fusedLocationClient: FusedLocationProviderClient? = null
+
+    private val trackingObserver =
+        Observer<Boolean> { trackingEnabled ->
+            if (trackingEnabled)
+                startTrackingGeofence()
+            else
+                stopTrackingGeofence()
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +94,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         fusedLocationClient?.requestLocationUpdates(locationRequest, FusedLocationCallback(), null)
+        viewModel?.trackingEnabled?.observe(this, trackingObserver)
+    }
+
+    private fun startTrackingGeofence() {
+        val intent = Intent(this, GeofenceForegroundService::class.java)
+        val latLng = viewModel?.targetLatLng?.value
+        intent.putExtra(GeofenceForegroundService.LAT_LNG_EXTRA, latLng)
+        startService(intent)
+    }
+
+    private fun stopTrackingGeofence() {
+        val intent = Intent(this, GeofenceForegroundService::class.java)
+        stopService(intent)
     }
 
     private fun setFragment(containerId: Int, fragment: Fragment) {

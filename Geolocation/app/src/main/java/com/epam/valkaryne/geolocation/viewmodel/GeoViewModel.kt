@@ -15,6 +15,8 @@ class GeoViewModel : ViewModel() {
     val targetLatLng: MutableLiveData<LatLng> = MutableLiveData()
     val geoRequest: MutableLiveData<Int> = MutableLiveData()
 
+    val trackingEnabled: MutableLiveData<Boolean> = MutableLiveData()
+
     companion object {
         const val RQS_RESET_TARGET = 180
     }

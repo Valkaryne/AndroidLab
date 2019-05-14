@@ -5,4 +5,7 @@
     <string name="reset">Reset</string>
     <string name="set">Set</string>
     <string name="track_text">Track your position</string>
+
+    <string name="standard_enter_message">You have just entered the desired area.</string>
+    <string name="foreground_service_message">You\'re in tracking mode right now.</string>
 </resources>
