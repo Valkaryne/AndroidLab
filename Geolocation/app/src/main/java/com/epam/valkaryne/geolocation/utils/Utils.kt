@@ -32,7 +32,7 @@ fun createNotification(context: Context, message: String): Notification {
         val channel = NotificationChannel(
             NOTIFICATION_CHANNEL_ID,
             NOTIFICATION_CHANNEL_NAME,
-            NotificationManager.IMPORTANCE_DEFAULT
+            NotificationManager.IMPORTANCE_HIGH
         )
 
         notificationManager.createNotificationChannel(channel)

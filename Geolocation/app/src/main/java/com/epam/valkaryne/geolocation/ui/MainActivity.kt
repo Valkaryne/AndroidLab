@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -101,7 +102,12 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, GeofenceForegroundService::class.java)
         val latLng = viewModel?.targetLatLng?.value
         intent.putExtra(GeofenceForegroundService.LAT_LNG_EXTRA, latLng)
-        startService(intent)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            startForegroundService(intent)
+        else
+            startService(intent)
+
+
     }
 
     private fun stopTrackingGeofence() {
