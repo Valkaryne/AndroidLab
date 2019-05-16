@@ -12,5 +12,6 @@ import androidx.lifecycle.ViewModel
 class MainViewModel : ViewModel() {
 
     var bitmap: Bitmap? = null
+    var isBound = false
     var isDownloading = false
 }
