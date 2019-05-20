@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/job_view"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    app:cardElevation="10dp"
+    app:cardUseCompatPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_card_logo"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:contentDescription="@string/company_logo"
+            tools:srcCompat="@tools:sample/avatars[3]" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_card_vacancy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:maxLines="1"
+                android:text=""
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="Junior/Middle Android Developer" />
+
+            <TextView
+                android:id="@+id/tv_card_company"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                tools:text="EPAM" />
+
+            <TextView
+                android:id="@+id/tv_card_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="1dp"
+                android:text=""
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp"
+                tools:text="Minsk" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
