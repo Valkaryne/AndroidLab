@@ -34,7 +34,10 @@ class JobsAdapter(private val jobs: List<Job>, private val context: Context?) :
 
         context?.let {
             Glide.with(it)
-                .load(job.logoUrl).apply(RequestOptions.circleCropTransform())
+                .load(job.logoUrl).apply(RequestOptions
+                    .circleCropTransform()
+                    .fitCenter())
+                .error(R.drawable.ic_empty_logo)
                 .into(ivLogo)
         }
     }
