@@ -8,9 +8,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.epam.valkaryne.githubjobs.requestmodels.GitService
+import com.epam.valkaryne.githubjobs.requestmodels.Job
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
+/**
+ * Main [Fragment] contains recycler view and automatically loads jobs list on create view.
+ *
+ * @author Valentine Litvin
+ */
 
 class JobsFragment : Fragment() {
 
@@ -24,7 +32,7 @@ class JobsFragment : Fragment() {
         val jobsRecycler =
             inflater.inflate(R.layout.fragment_jobs, container, false) as RecyclerView
 
-        adapter = JobsAdapter(getJobsFromGit(), context)
+        adapter = JobsAdapter(context, getJobsFromGit())
         jobsRecycler.adapter = adapter
         jobsRecycler.layoutManager = LinearLayoutManager(activity)
 
@@ -49,7 +57,7 @@ class JobsFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<Job>>, t: Throwable) {
-                Toast.makeText(this@JobsFragment.context, "ERROR: ${t.message}", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "ERROR: ${t.message}", Toast.LENGTH_SHORT)
                     .show()
             }
         })

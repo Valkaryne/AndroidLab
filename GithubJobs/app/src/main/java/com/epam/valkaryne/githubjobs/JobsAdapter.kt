@@ -9,8 +9,15 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.epam.valkaryne.githubjobs.requestmodels.Job
 
-class JobsAdapter(private val jobs: List<Job>, private val context: Context?) :
+/**
+ * Adapter to put git job items into Recycler View.
+ *
+ * @author Valentine Litvin
+ */
+
+class JobsAdapter(private val context: Context?, private val jobs: List<Job>) :
     RecyclerView.Adapter<JobsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

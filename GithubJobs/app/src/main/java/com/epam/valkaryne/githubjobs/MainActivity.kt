@@ -3,6 +3,12 @@ package com.epam.valkaryne.githubjobs
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
+/**
+ * The simplest Activity contains fragment with recycler view.
+ *
+ * @author Valentine Litvin
+ */
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
