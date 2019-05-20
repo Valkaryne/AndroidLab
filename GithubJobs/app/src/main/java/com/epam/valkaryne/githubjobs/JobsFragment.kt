@@ -57,7 +57,7 @@ class JobsFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<Job>>, t: Throwable) {
-                Toast.makeText(context, "ERROR: ${t.message}", Toast.LENGTH_SHORT)
+                Toast.makeText(activity, "ERROR: ${t.message}", Toast.LENGTH_SHORT)
                     .show()
             }
         })
