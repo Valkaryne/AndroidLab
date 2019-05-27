@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RxSongList</string>
+    <string name="album_image_description">Album Image</string>
 </resources>
