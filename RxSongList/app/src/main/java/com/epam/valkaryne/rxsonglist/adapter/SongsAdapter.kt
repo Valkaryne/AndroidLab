@@ -9,6 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.epam.valkaryne.rxsonglist.R
 import com.epam.valkaryne.rxsonglist.model.Song
 
+/**
+ * [SongsAdapter] exposes cards with songs into the recycler view.
+ * Considering receiving data one-by-one it has method [addItem], and it also has method [clearItems]
+ * because of need for showing filtered data.
+ *
+ * @author Valentine Litvin
+ */
+
 class SongsAdapter : RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
 
     private val songs: MutableList<Song> = ArrayList()

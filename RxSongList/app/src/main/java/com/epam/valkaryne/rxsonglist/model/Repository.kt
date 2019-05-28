@@ -4,6 +4,13 @@ import com.epam.valkaryne.rxsonglist.R
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
 
+/**
+ * The inner [Repository] provides the model of the application with required data and has only one
+ * method [getItems] returns set of songs data one-by-one.
+ *
+ * @author Valentine Litvin
+ */
+
 class Repository {
 
     private val titles = arrayListOf(

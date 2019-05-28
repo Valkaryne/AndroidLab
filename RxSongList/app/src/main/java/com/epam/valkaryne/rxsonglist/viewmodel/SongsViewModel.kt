@@ -10,6 +10,13 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.ReplaySubject
 
+/**
+ * This [ViewModel] is responsible for getting songs data from repository and putting it to the adapter of
+ * the recycler view.
+ *
+ * @author Valentine Litvin
+ */
+
 class SongsViewModel : ViewModel() {
 
     val adapter: SongsAdapter = SongsAdapter()

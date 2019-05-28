@@ -10,6 +10,13 @@ import com.epam.valkaryne.rxsonglist.R
 import com.epam.valkaryne.rxsonglist.viewmodel.SongsViewModel
 import com.jakewharton.rxbinding.widget.RxTextView
 
+/**
+ * The simplest [MainActivity] is considered as View contains [RecyclerView] with cards of songs
+ * and [EditText] to filter them.
+ *
+ * @author Valentine Litvin
+ */
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: SongsViewModel
