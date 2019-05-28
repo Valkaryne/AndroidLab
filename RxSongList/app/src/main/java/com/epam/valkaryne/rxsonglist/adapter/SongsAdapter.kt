@@ -1,6 +1,5 @@
 package com.epam.valkaryne.rxsonglist.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -15,7 +14,6 @@ class SongsAdapter : RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
     private val songs: MutableList<Song> = ArrayList()
 
     fun addItem(song: Song) {
-        Log.d("SuperCat", "addItem")
         songs.add(song)
         notifyDataSetChanged()
     }
@@ -26,14 +24,12 @@ class SongsAdapter : RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        Log.d("SuperCat", "onCreateViewHolder")
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.card_song, parent, false) as CardView
         return ViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.d("SuperCat", "position $position")
         val song = songs[position]
         val itemView = holder.item
 

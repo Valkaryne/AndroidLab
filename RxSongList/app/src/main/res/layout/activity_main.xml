@@ -4,6 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="8dp"
+        android:focusedByDefault="false"
+        android:hint="@string/search_hint" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_songs"
         android:layout_width="match_parent"

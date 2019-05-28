@@ -1,6 +1,5 @@
 package com.epam.valkaryne.rxsonglist.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.epam.valkaryne.rxsonglist.adapter.SongsAdapter
 import com.epam.valkaryne.rxsonglist.model.Repository
@@ -14,18 +13,31 @@ import io.reactivex.subjects.ReplaySubject
 class SongsViewModel : ViewModel() {
 
     val adapter: SongsAdapter = SongsAdapter()
+    var query = ""
+        set(value) {
+            field = value.toLowerCase()
+        }
 
     private var disposable: Disposable? = null
     private val replaySubject = ReplaySubject.create<Song>()
 
-    fun initialize() {
-        Log.d("SuperCat", "Init")
-        fetchSongsFromRepository()
-    }
-
     override fun onCleared() {
         super.onCleared()
         disposable?.dispose()
+    }
+
+    fun initialize() {
+        fetchSongsFromRepository()
+    }
+
+    fun filterSongsInAdapter() {
+        adapter.clearItems()
+        disposable?.dispose()
+        disposable = replaySubject
+            .filter { song -> song.title.toLowerCase().contains(query) }
+            .subscribeBy(
+                onNext = { song -> adapter.addItem(song) }
+            )
     }
 
     private fun fetchSongsFromRepository() {
@@ -33,8 +45,6 @@ class SongsViewModel : ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(replaySubject)
-        disposable = replaySubject.subscribeBy(
-            onNext = { song -> adapter.addItem(song) }
-        )
+        filterSongsInAdapter()
     }
 }
