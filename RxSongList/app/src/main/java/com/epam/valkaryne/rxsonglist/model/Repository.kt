@@ -53,7 +53,7 @@ class Repository {
         R.drawable.atargatis
     )
 
-    fun getItems() =
+    fun getItems(): Observable<Song> =
         Observable
             .range(0, 7)
             .concatMap { i ->
